@@ -1,0 +1,21 @@
+choice
+       prompt "select"
+       depends on BUILD_VAL_MEMPOOL
+       default BUILD_VAL_MEMPOOL01
+       help
+         select the test module
+
+config BUILD_VAL_MEMPOOL01
+       bool "build validation mempool01"
+       depends on BUILD_VAL_MEMPOOL
+       help
+         select the mempool test
+
+config BUILD_VAL_MEMPOOL02
+       bool "build validation mempool02"
+	   depends on BUILD_VAL_MEMPOOL
+	   help
+	     select the mempool test
+
+
+endchoice

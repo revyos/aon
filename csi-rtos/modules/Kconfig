@@ -1,0 +1,48 @@
+menu "Modules option"
+
+config CMSIS_ADAPTER
+    bool "cmsis adapter"
+    default n
+    help
+      select cmsis adapter
+if CMSIS_ADAPTER
+endif
+
+config MBED_ADAPTER
+    bool "mbed os adapter"
+    depends on CMSIS_RTOS
+    default n
+    help
+      select mbed os adapter
+
+config OS_COMM
+    bool "os comm"
+    default n
+    help
+      select os comm
+
+config FATFS
+     bool "fatfs"
+     default n
+     help
+       select support fatfs module
+
+config NEWLIB_WRAP
+     bool "newlib wrap"
+     default n
+     help
+       select newlib and newlib wrap
+
+config FAAD
+     bool "faad"
+     default n
+     help
+       select faad
+
+config OPUS
+     bool "opus"
+     default n
+     help
+       select opus
+
+endmenu

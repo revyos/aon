@@ -1,0 +1,79 @@
+yaml_file_type: project
+
+sdk_version: v0.1
+download_to_flash: false
+board: {name: light_c910_fpga, gcc_ld: gcc_flash.ld}
+
+define:
+    - CONFIG_XIP
+    - CONFIG_CHIP_LIGHT
+    - CONFIG_ARCH_RV64
+    - CONFIG_CPU_C910
+    - CONFIG_RV32_CORETIM
+    - CONFIG_SUPPORT_TSPEND
+common:
+    hello_world:
+        - 'hello_world'
+    benchmark:
+        - 'coremark'
+        - 'dhrystone'
+drivers:
+    uart:
+        - 'uart_dma'
+        - 'uart_intr'
+        - 'uart_sync'
+    timer:
+        - 'timer'
+    wdt:
+        - 'wdt'
+    iic:
+        - 'iic_master_intr'
+        - 'iic_master_sync'
+        - 'iic_memory_sync'
+        - 'iic_master_dma'
+
+    spiflash:
+        - 'spiflash_spi'
+        - 'spiflash_qspi'
+
+    i2s:
+        - 'i2s_master_send'
+        - 'i2s_master_send_async'
+        - 'i2s_master_send_dma'
+        - 'i2s_send_receive_loop'
+        - 'i2s_slave_receive'
+        - 'i2s_slave_receive_async'
+        - 'i2s_slave_receive_dma'
+    gpio:
+        - 'gpio_toggle'
+        - 'gpio_intr'
+    dma:
+        - 'dma'
+
+kernel:
+    rhino:
+        - 'os_hello_world'
+        - 'mutex'
+        - 'event'
+        - 'mem_pool'
+        - 'message_q'
+        - 'sem'
+        - 'task'
+        - 'os_time'
+        - 'os_timer'
+
+    freertos:
+        - 'os_hello_world'
+        - 'mutex'
+        - 'event'
+        - 'mem_pool'
+        - 'message_q'
+        - 'sem'
+        - 'task'
+        - 'os_time'
+        - 'os_timer'
+#    ucos3:
+#        - 'os_hello_world'
+#        - 'mutex'
+#        - 'event'
+

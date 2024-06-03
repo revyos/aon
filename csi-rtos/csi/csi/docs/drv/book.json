@@ -1,0 +1,69 @@
+{
+    "output.name": "site",
+    "language": "zh-hans",
+    "root": "./",
+    "structure": {
+        "readme": "readme.md"
+    },
+    "pluginsConfig": {
+        "theme-default": {
+            "showLevel": true
+        },
+        "disqus": {
+            "shortName": "gitbookuse"
+        },
+        "prism": {
+            "css": [
+                "prism-themes/themes/prism-base16-ateliersulphurpool.light.css"
+            ]
+        },
+        "github": {
+            "url": "https://github.com/wiliam2015/gitbook-use"
+        },
+        "github-buttons": {
+            "repo": "wiliam2015/gitbook-use",
+            "types": [
+                "star"
+            ],
+            "size": "small"
+        },
+        "include-codeblock": {
+            "template": "ace",
+            "unindent": true,
+            "edit": true
+        },
+        "sharing": {
+            "weibo": true,
+            "facebook": false,
+            "twitter": false,
+            "google": false,
+            "instapaper": false,
+            "vk": false,
+            "all": [
+                "weibo"
+            ]
+        },
+        "tbfed-pagefooter": {
+            "copyright": "Copyright © wiliam.me 2017",
+            "modify_label": "该文件修订时间：",
+            "modify_format": "YYYY-MM-DD HH:mm:ss"
+        },
+        "simple-page-toc": {
+            "maxDepth": 3,
+            "skipFirstH1": true
+        },
+        "anchor-navigation-ex": {
+            "isRewritePageTitle": false,
+            "tocLevel1Icon": "fa fa-hand-o-right",
+            "tocLevel2Icon": "fa fa-hand-o-right",
+            "tocLevel3Icon": "fa fa-hand-o-right"
+        },
+        "sectionx": {
+            "tag": "b"
+        },
+        "favicon": {
+            "shortcut": "favicon.ico",
+            "bookmark": "favicon.ico"
+        }
+    }
+}

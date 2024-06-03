@@ -1,0 +1,114 @@
+#! /usr/bin/env python
+# coding=UTF-8
+import sys
+import datetime
+import os
+
+h_file_frame =\
+'''/*
+ * Copyright (C) 2017-CURRENT_YEAR Alibaba Group Holding Limited
+ */
+
+/******************************************************************************
+ * @file     FILE_NAME.h
+ * @brief    
+ * @version  
+ * @date     FILE_CREATE_DATA
+ ******************************************************************************/
+
+#ifndef _FILE_DEF_H_
+#define _FILE_DEF_H_
+
+>>>>>>>>>>>>>
+请注意文件模板格式，按照模板格式顺序添加对应内容
+在此区间添加头文件
+>>>>>>>>>>>>>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+>>>>>>>>>>>>>
+在此区间添加枚举定义
+>>>>>>>>>>>>>
+
+>>>>>>>>>>>>>
+在此区间添加结构体定义
+>>>>>>>>>>>>>
+
+>>>>>>>>>>>>>
+在此区间添加宏
+>>>>>>>>>>>>>
+
+>>>>>>>>>>>>>
+在此区间添函数声明
+
+/**
+  \\brief
+  \param[in]
+  \\return
+*/
+uint32_t xxxxxxx(void);
+
+/**
+  \\brief
+  \param[in]
+  \\return
+*/
+uint32_t xxxxxxx(void);
+
+>>>>>>>>>>>>>
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif  /* _FILE_DEF_H_*/'''
+
+c_file_frame =\
+'''/*
+ * Copyright (C) 2017-CURRENT_YEAR Alibaba Group Holding Limited
+ */
+
+/******************************************************************************
+ * @file     FILE_NAME.c
+ * @brief    
+ * @version  
+ * @date     FILE_CREATE_DATA
+ ******************************************************************************/
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+在此区间内填写代码，与文件描述之间的空行不要删除
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+'''
+
+def create_file(val) :
+    if len(val) != 2 :
+        print('input error\n')
+        return
+
+    path = val[1]
+    file_name = path.split('/')[-1]
+    curr_time = datetime.datetime.now()
+
+    if file_name[-2:] == '.c' :
+        data = c_file_frame.replace("FILE_NAME", file_name[0 : -2])
+        data = data.replace('FILE_CREATE_DATA', str(curr_time.date()))
+        data = data.replace('CURRENT_YEAR', str(curr_time.year))
+    elif file_name[-2:] == '.h' :
+        data = h_file_frame.replace("FILE_NAME", file_name[0 : -2])
+        data = data.replace("FILE_DEF", file_name[0 : -2].upper())
+        data = data.replace('FILE_CREATE_DATA', str(curr_time.date()))
+        data = data.replace('CURRENT_YEAR', str(curr_time.year))
+    else :
+        print('file type error, please input xxx.c or xxx.h\n')
+        return
+
+    f = open(path, "w")
+    f.write(data)
+    f.close()
+
+    return
+
+create_file(sys.argv)
+

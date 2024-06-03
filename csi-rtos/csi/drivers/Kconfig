@@ -1,0 +1,39 @@
+menu "csi drivers options"
+
+config PMIC_DA9063_V1
+    bool "pmic da9063 v1"
+    default n
+    help
+      select the da9063 v1
+
+config PMIC_DA9121_V1
+      bool "pmic da9121 v1"
+      default n
+      help
+        select the da9121 v1
+
+config PMIC_SLG51000_V1
+        bool "pmic slg51000 v1"
+        default n
+        help
+          select the slg51000 v1
+
+config PMIC_RICOH567_V0
+          bool "pmic ricoh567 v0"
+          default n
+          help
+            select the ricoh567 v0
+
+config PMIC_RICOH567_V1
+            bool "pmic ricoh567 v1"
+            default n
+            help
+              select the ricoh567 v1
+
+config PMIC_APTF110_V1
+              bool "pmic aptf110 v1"
+              default n
+              help
+                select the aptf110 v1
+
+endmenu

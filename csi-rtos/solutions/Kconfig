@@ -1,0 +1,18 @@
+menu "Projects options"
+
+choice
+     prompt "select examples"
+     default FM_AON_LOW_POWER
+     help
+      select the solutions
+
+config FM_AON_LOW_POWER
+    bool "Light FM Aon low power"
+    help
+      select the Aon low power solution
+if FM_AON_LOW_POWER
+source "solutions/fm_aon_low_power/Kconfig"
+endif
+
+endchoice
+endmenu

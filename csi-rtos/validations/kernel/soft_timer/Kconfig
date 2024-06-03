@@ -1,0 +1,14 @@
+choice
+       prompt "select"
+       depends on BUILD_VAL_SOFT_TIMER
+       default BUILD_VAL_SOFT_TIMER01
+       help
+         select the test module
+
+config BUILD_VAL_SOFT_TIMER01
+       bool "build validation soft_timer01"
+       depends on BUILD_VAL_SOFT_TIMER
+       help
+         select the soft timer test
+
+endchoice

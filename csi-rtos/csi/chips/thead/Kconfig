@@ -1,0 +1,404 @@
+choice
+     prompt "chip select"
+     default CHIP_PHOBOS
+     help
+       select the chip
+
+config CHIP_SMARTL
+     bool "smartl"
+     depends on CHIP_VENDOR_THEAD
+     select HAVE_VIC
+     help
+       select the chip type is smart-l01
+
+config CHIP_SMARTH_MMU
+     bool "smarth mmu"
+     depends on CHIP_VENDOR_THEAD && (CPU_C807 || CPU_C807F || CPU_C807FV || CPU_C810 || CPU_C810V)
+     help
+       select the chip type is smarth with mmu
+
+config CHIP_SMARTH_610
+     bool "smarth610"
+     depends on CHIP_VENDOR_THEAD && (CPU_CK610E || CPU_CK610EF)
+     help
+       select the chip type is smarth610
+
+config CHIP_SMARTH_610M
+     bool "smarth610m"
+     depends on CHIP_VENDOR_THEAD && (CPU_CK610E || CPU_CK610EF)
+     help
+       select the chip type is smarth610m
+
+config CHIP_SMARTL_RV32
+     bool "smartl rv32"
+     depends on CHIP_VENDOR_THEAD
+     help
+       select the chip type is smartl rv32
+
+config CHIP_SMARTL
+     bool "smartl"
+     depends on CHIP_VENDOR_THEAD
+     select HAVE_VIC
+     help
+       select the chip type is smart-l01
+
+config CHIP_SMARTL_CK802
+     bool "smartl ck802"
+     select HAVE_VIC
+     depends on CHIP_VENDOR_THEAD
+     help
+       select the chip type is smartl ck802
+
+config CHIP_SMARTL_CK803
+     bool "smartl ck803"
+     select HAVE_VIC
+     depends on CHIP_VENDOR_THEAD
+     help
+       select the chip type is smartl ck803
+
+config CHIP_SMARTL_CK804F
+     bool "smartl ck804f"
+     select HAVE_VIC
+     depends on CHIP_VENDOR_THEAD
+     help
+       select the chip type is smartl ck804f
+
+config CHIP_SMARTL_CK804EF
+     bool "smartl ck804ef"
+     select HAVE_VIC
+     depends on CHIP_VENDOR_THEAD
+     help
+       select the chip type is smartl ck804ef
+
+config CHIP_SMARTL_CK805F
+     bool "smartl ck805f"
+     select HAVE_VIC
+     depends on CHIP_VENDOR_THEAD
+     help
+       select the chip type is smartl ck805f
+
+config CHIP_WUJIAN100_OPEN
+     bool "wujian100_open"
+     depends on CHIP_VENDOR_THEAD
+     help
+       select the chip type is wujian100_open
+
+config CHIP_CH2201
+     bool "ch2201"
+     depends on CHIP_VENDOR_THEAD
+     help
+       select the chip type is CH2201
+
+config CHIP_CH2301
+     bool "ch2301"
+     depends on CHIP_VENDOR_THEAD
+     help
+       select the chip type is ch2301
+
+config CHIP_CH6101
+     bool "ch6101"
+     depends on CHIP_VENDOR_THEAD
+     help
+       select the chip type is ch6101
+
+if CHIP_CH6101
+endif
+
+config CHIP_HOBBIT4
+     bool "hobbit4"
+     depends on CHIP_VENDOR_THEAD
+     help
+       select the chip type is hobbit4
+
+config CHIP_JUPITER_BC
+     bool "jupiter_bc"
+     depends on CHIP_VENDOR_THEAD
+     help
+       select the chip type is jupiter_bc
+
+config CHIP_JUPITER_LC
+     bool "jupiter_lc"
+     depends on CHIP_VENDOR_THEAD
+     help
+       select the chip type is jupiter_lc
+
+config CHIP_JUPITER_BC_MPW_1
+     bool "jupiter_bc_mpw_1"
+     depends on CHIP_VENDOR_THEAD
+     help
+       select the chip type is jupiter_bc_mpw_1
+
+config CHIP_JUPITER_LC_MPW_1
+     bool "jupiter_lc_mpw_1"
+     depends on CHIP_VENDOR_THEAD
+     help
+       select the chip type is jupiter_lc_mpw_1
+
+config CHIP_JUPITER_BC_MPW_2
+     bool "jupiter_bc_mpw_2"
+     depends on CHIP_VENDOR_THEAD
+     help
+       select the chip type is jupiter_bc_mpw_2
+
+config CHIP_JUPITER_LC_MPW_2
+     bool "jupiter_lc_mpw_2"
+     depends on CHIP_VENDOR_THEAD
+     help
+       select the chip type is jupiter_lc_mpw_2
+
+config CHIP_SPARROW
+     bool "sparrow"
+     depends on CHIP_VENDOR_THEAD
+     select HAVE_VIC
+     help
+       select the chip type is sparrow
+
+config CHIP_LIGHT_FM
+     bool "light_fm"
+     depends on CHIP_VENDOR_THEAD
+     select HAVE_VIC
+     help
+       select the chip type is light_fm
+	
+config CHIP_LIGHT
+     bool "light"
+     depends on CHIP_VENDOR_THEAD
+     select HAVE_VIC
+     help
+       select the chip type is light
+
+config CHIP_LIGHT_AON
+     bool "light_aon"
+     depends on CHIP_VENDOR_THEAD
+     select HAVE_VIC
+     help
+       select the chip type is light
+
+config CHIP_AVFS
+     bool "avfs"
+     depends on CHIP_VENDOR_THEAD
+     select HAVE_VIC
+     help
+       select the chip type is avfs
+
+config CHIP_DANICA
+     bool "danica"
+     depends on CHIP_VENDOR_THEAD
+     select HAVE_VIC
+     help
+       select the chip type is danica
+
+config CHIP_ALKAID
+     bool "alkaid"
+     depends on CHIP_VENDOR_THEAD
+     select HAVE_VIC
+     help
+       select the chip type is alkaid
+
+config CHIP_DUBHE
+     bool "dubhe"
+     depends on CHIP_VENDOR_THEAD
+     select HAVE_VIC
+     help
+       select the chip type is dubhe
+
+config CHIP_MERAK
+     bool "merak"
+     depends on CHIP_VENDOR_THEAD
+     select HAVE_VIC
+     help
+       select the chip type is merak
+
+config CHIP_MIZAR
+     bool "mizar"
+     depends on CHIP_VENDOR_THEAD
+     select HAVE_VIC
+     help
+       select the chip type is mizar
+
+config CHIP_HOBBIT3_SE
+     bool "hobbit3_se"
+     depends on CHIP_VENDOR_THEAD
+     select HAVE_VIC
+     help
+       select the chip type is hobbit3_se
+
+config CHIP_YUNVOICE
+     bool "yunvoice"
+     depends on CHIP_VENDOR_THEAD
+     help
+       select the chip type is yunvoice
+
+if CHIP_YUNVOICE
+endif
+
+config CHIP_PANGU
+     bool "pangu"
+     depends on CHIP_VENDOR_THEAD
+     help
+       select the chip type is pangu
+
+config CHIP_SMARTH_NOMMU
+     bool "smarth nommu"
+      depends on CHIP_VENDOR_THEAD && (CPU_I807 || CPU_R807 || CPU_R807F)
+     help
+       select the chip type is smarth without mmu
+
+config CHIP_ERAGON2_R807
+     bool "eragon2_r807"
+     depends on CHIP_VENDOR_THEAD
+     help
+       select the chip type is eragon2_r807
+
+config CHIP_ERAGON3
+     bool "eragon3"
+     depends on CHIP_VENDOR_THEAD
+     help
+       select the chip type is eragon3
+
+config CHIP_PHOBOS
+     bool "phobos"
+     depends on CHIP_VENDOR_THEAD && CPU_CK802
+     help
+       select the chip type is phobos
+
+config CHIP_TX216
+     bool "tx216"
+     depends on CHIP_VENDOR_THEAD
+     select HAVE_VIC
+     help
+       select the chip type is tx216
+
+if CHIP_TX216
+endif
+
+config CHIP_CETUS
+     bool "cetus"
+     depends on CHIP_VENDOR_THEAD
+     select HAVE_VIC
+     help
+       select the chip type is cetus
+
+config CHIP_LN8819_CPU0
+     bool "ln8819_cpu0"
+     depends on CHIP_VENDOR_THEAD
+     select HAVE_VIC
+     help
+       select the chip type is ln8819_cpu0
+
+config CHIP_LN8819_CPU1
+     bool "ln8819_cpu1"
+     depends on CHIP_VENDOR_THEAD
+     select HAVE_VIC
+     help
+       select the chip type is ln8819_cpu1
+
+config CHIP_ARIES_AP
+     bool "aries ap"
+     depends on CHIP_VENDOR_THEAD
+     select HAVE_VIC
+     help
+       select the chip type is aries ap
+
+config CHIP_ARIES_SE
+     bool "aries se"
+     depends on CHIP_VENDOR_THEAD
+     select HAVE_VIC
+     help
+       select the chip type is aries se
+
+config CHIP_MERAK
+     bool "merak"
+     depends on CHIP_VENDOR_THEAD
+     select HAVE_VIC
+     help
+       select the chip type is merak
+
+if CHIP_TX216
+endif
+
+config CHIP_SIMULATE
+    bool "simulate"
+    depends on CHIP_VENDOR_THEAD
+    select HAVE_VIC
+    help
+      select the chip type is simulate
+
+endchoice
+#endmenu
+
+choice
+depends on CHIP_PANGU
+prompt "pangu cpu select"
+     default CHIP_PANGU_CPU0
+     help
+       select the pangu cpu
+
+config CHIP_PANGU_CPU0
+     bool "pangu_cpu0"
+     depends on CHIP_VENDOR_THEAD
+     help
+       select the chip type is pangu
+
+config CHIP_PANGU_CPU1
+     bool "pangu_cpu1"
+     depends on CHIP_VENDOR_THEAD
+     help
+       select the chip type is pangu
+
+config CHIP_PANGU_CPU2
+     bool "pangu_cpu2"
+     depends on CHIP_VENDOR_THEAD
+     help
+       select the chip type is pangu
+endchoice
+
+config CHIP_NAME_STR
+    string
+    default "smartl"       if CHIP_SMARTL
+    default "smarth_mmu"   if CHIP_SMARTH_MMU
+    default "smarth_nommu" if CHIP_SMARTH_NOMMU
+    default "smarth_610"   if CHIP_SMARTH_610
+    default "smarth_610m"  if CHIP_SMARTH_610M
+    default "smartl_rv32"  if CHIP_SMARTL_RV32
+    default "smartl_ck802" if CHIP_SMARTL_CK802
+    default "smartl_ck803" if CHIP_SMARTL_CK803
+    default "smartl_ck804f" if CHIP_SMARTL_CK804F
+    default "smartl_ck804ef" if CHIP_SMARTL_CK804EF
+    default "smartl_ck805f" if CHIP_SMARTL_CK805F
+    default "ch2201"       if CHIP_CH2201
+    default "phobos"       if CHIP_PHOBOS
+    default "tx216"        if CHIP_TX216
+    default "ch2301"       if CHIP_CH2301
+    default "ch6101"       if CHIP_CH6101
+    default "hobbit4"      if CHIP_HOBBIT4
+    default "jupiter_bc"   if CHIP_JUPITER_BC
+    default "jupiter_lc"   if CHIP_JUPITER_LC
+    default "jupiter_bc_mpw_1"   if CHIP_JUPITER_BC_MPW_1
+    default "jupiter_lc_mpw_1"   if CHIP_JUPITER_LC_MPW_1
+    default "jupiter_bc_mpw_2"   if CHIP_JUPITER_BC_MPW_2
+    default "jupiter_lc_mpw_2"   if CHIP_JUPITER_LC_MPW_2
+    default "sparrow"      if CHIP_SPARROW
+    default "light"        if CHIP_LIGHT
+    default "light_fm"     if CHIP_LIGHT_FM
+    default "light_aon"    if CHIP_LIGHT_AON
+    default "avfs"         if CHIP_AVFS
+    default "yunvoice"     if CHIP_YUNVOICE
+    default "pangu_cpu0"   if CHIP_PANGU_CPU0
+    default "pangu_cpu1"   if CHIP_PANGU_CPU1
+    default "pangu_cpu2"   if CHIP_PANGU_CPU2
+    default "danica"       if CHIP_DANICA
+    default "alkaid"       if CHIP_ALKAID
+    default "mizar"        if CHIP_MIZAR
+    default "merak"        if CHIP_MERAK
+    default "dubhe"        if CHIP_DUBHE
+    default "hobbit3_se"   if CHIP_HOBBIT3_SE
+    default "eragon2_r807" if CHIP_ERAGON2_R807
+    default "eragon3"      if CHIP_ERAGON3
+    default "cetus"        if CHIP_CETUS
+    default "ln8819_cpu0"  if CHIP_LN8819_CPU0 
+    default "ln8819_cpu1"  if CHIP_LN8819_CPU1
+    default "aries_se"     if CHIP_ARIES_SE
+    default "aries_ap"     if CHIP_ARIES_AP
+    default "wujian100_open"   if CHIP_WUJIAN100_OPEN
+    default "simulate"     if CHIP_SIMULATE

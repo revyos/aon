@@ -1,0 +1,16 @@
+soft_version: "v1.0"
+mtb_version: 1
+chip: cb2201        # cb2201 / cb6501
+signature_type: RSA # RSA / ECC
+digest_type: SHA256 # SHA1 / MD5 / SHA224 / SHA256 / SHA384 / SHA512
+diff:
+  sector: 512
+  ram_size: 4096
+flash:
+  sector: 512
+  size: 512000
+partitions:
+  - { name: mtb,     address: 0x10000000, size: 0x000200, update: NONE }
+  - { name: boot,    address: 0x10000800, size: 0x005600, update: NONE, verify: true, file: boot }
+  - { name: prim,    address: 0x1000BC00, size: 0x025800, update: DIFF, verify: true, file: prim }
+  - { name: otp,     address: 0x4003F800, size: 0x000800, update: NONE }

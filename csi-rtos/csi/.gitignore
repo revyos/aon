@@ -1,0 +1,7 @@
+*.o
+*.d
+*.swp
+**/__pycache__
+cscope.out
+tags
+tools/node_modules

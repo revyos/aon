@@ -1,0 +1,14 @@
+choice
+       prompt "select"
+       depends on BUILD_VAL_DMAC
+       default BUILD_VAL_DMAC01
+       help
+         select the test module
+
+config BUILD_VAL_DMAC01
+       bool "build validation dmac01"
+       depends on BUILD_VAL_DMAC
+       help
+         select the dmac driver validation
+
+endchoice

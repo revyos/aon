@@ -1,0 +1,10 @@
+name: mpw_aon_low_power
+vendor: thead
+license: Copyright (C) 2021 Alibaba Group Holding Limited
+description: mpw aon low power example
+type: project
+
+versions:
+    v1.0:
+        drv_path: ./
+        depends: None

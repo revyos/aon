@@ -1,0 +1,19 @@
+choice
+       prompt "select"
+       depends on BUILD_VAL_SHA
+       default BUILD_VAL_SHA01
+       help
+         select the test module
+
+config BUILD_VAL_SHA01
+       bool "build validation sha01"
+       depends on BUILD_VAL_SHA
+       help
+         select the sha driver validation
+
+config BUILD_VAL_SHA02
+       bool "build validation sha02"
+       depends on BUILD_VAL_SHA
+       help
+         select the sha driver validation
+endchoice

@@ -1,0 +1,14 @@
+choice
+       prompt "select"
+       depends on BUILD_VAL_SPU_USART
+       default BUILD_VAL_SPU_USART01
+       help
+         select the test module
+
+config BUILD_VAL_SPU_USART01
+       bool "build validation spu_usart01"
+       depends on BUILD_VAL_SPU_USART
+       help
+         select the spu_usart driver validation
+
+endchoice

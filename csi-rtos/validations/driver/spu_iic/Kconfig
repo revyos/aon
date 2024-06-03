@@ -1,0 +1,14 @@
+choice
+       prompt "select"
+       depends on BUILD_VAL_SPU_IIC
+       default BUILD_VAL_SPU_IIC01
+       help
+         select the test module
+
+config BUILD_VAL_SPU_IIC01
+       bool "build validation spu_iic01"
+       depends on BUILD_VAL_SPU_IIC
+       help
+         select the spu_iic driver validation
+
+endchoice

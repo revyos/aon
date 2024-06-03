@@ -1,0 +1,14 @@
+choice
+       prompt "select"
+       depends on BUILD_VAL_USI_USART
+       default BUILD_VAL_USI_USART01
+       help
+         select the test module
+
+config BUILD_VAL_USI_USART01
+       bool "build validation usi_usart01"
+       depends on BUILD_VAL_USI_USART
+       help
+         select the usi_usart driver validation
+
+endchoice

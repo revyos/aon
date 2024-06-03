@@ -1,0 +1,25 @@
+choice
+       prompt "select"
+       depends on BUILD_VAL_USART
+       default BUILD_VAL_USART01
+       help
+         select the test module
+
+config BUILD_VAL_USART01
+       bool "build validation usart01"
+       depends on BUILD_VAL_USART
+       help
+         select the usart driver validation
+
+config BUILD_VAL_USART02
+       bool "build validation usart02"
+       depends on BUILD_VAL_USART
+       help
+         select the usart driver validation
+
+config BUILD_VAL_USART_SPEED
+       bool "build validation usart_speed"
+       depends on BUILD_VAL_USART
+       help
+         select the usart driver validation
+endchoice

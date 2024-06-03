@@ -1,0 +1,39 @@
+name: mpw_aon_low_power
+version: v7.2-dev
+description: aon low power 例
+type: solution
+yoc_version: V7.2.2
+
+solution:
+  board_name: CHIP_NAME_LOWER_evb
+
+depends:                                       # 该组件依赖其他的组件
+  - mm: V7.2.2
+  - csi: V7.2.2
+  - console: V7.2.2
+  - minilibc: V7.2.2
+
+# 编译参数
+build_config:
+  include:
+    - include
+  libs:
+    - m
+
+  libpath:
+
+  ldflag: -nostartfiles -Wl,--gc-sections -lm  -Wl,-zmax-page-size=1024
+  cflag: -Os -g
+  cxxflag: -Os -g
+
+
+# 源文件
+source_file:
+    - src/*.c
+
+
+defconfig:
+  CONFIG_KERNEL_NONE: 1
+  CONFIG_ARCH_INTERRUPTSTACK: 4096
+  CONFIG_DEBUG_MODE: 1
+  CONFIG_AUDIO_ENABLE: 1

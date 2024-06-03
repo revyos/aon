@@ -1,0 +1,44 @@
+yaml_file_type: project
+
+sdk_version: v2.0.0
+
+download_to_flash: false
+board: {name: light_aon_fpga, gcc_ld: gcc_mem.ld}
+
+define:
+    - CONFIG_BENCHMARK
+    - CONFIG_BENCHMARK_COREMARK
+    - CONFIG_BENCHMARK_DHRY
+    - CONFIG_CHIP_LIGHT_AON
+    - CONFIG_CPU_E902
+    - CONFIG_NEWLIB_WRAP
+
+common:
+    hello_world:
+        - 'hello_world'
+    benchmark:
+        - 'coremark'
+        - 'dhrystone'
+drivers:
+    uart:
+        - 'uart_intr'
+        - 'uart_sync'
+    timer:
+        - 'timer'
+    iic:
+        - 'iic_master_intr'
+        - 'iic_master_sync'
+    gpio:
+        - 'gpio_intr'
+
+    rtc:
+        - 'rtc'
+    wdt:
+        - 'wdt'
+    mbox:
+        - 'mbox_sender'
+        - 'mbox_receiver'
+kernel:
+    timer:
+        - 'timer'
+ 

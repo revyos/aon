@@ -1,0 +1,53 @@
+mainmenu "SDK Configuration"
+
+menu "Target options"
+source "csi/csi/Kconfig"
+source "csi/chips/Kconfig"
+source "csi/libs/Kconfig"
+source "boards/Kconfig"
+endmenu
+
+source "csi/csi_kernel/Kconfig"
+
+source "csi/drivers/Kconfig"
+
+source "modules/Kconfig"
+
+source "solutions/Kconfig"
+
+menu "Build options"
+
+config DEBUG_LEVEL
+    string "Debug Level"
+    default "-g2"
+    help
+        Choice: -g1/-g2/-g3
+
+config OPTIMIZE_LEVEL
+    string "GCC Optimization Level"
+    default "-Os"
+    help
+      Choice: -O0/-O1/-O2/-O3/-Os
+
+config BIG_ENDIAN
+    bool "big endian"
+    default n
+    help
+      the data and inst store in memory in big endian
+
+config MMU
+    bool "cpu mmu"
+    help
+      select the mmu
+
+config USER_DEFINED_LD_DIR_STR
+    string "the user defined LD DIR"
+    default ""
+    help
+      the dir where store the script which user defined
+config PARAM_NOT_CHECK
+    bool "CONFIG_PARAM_NOT_CHECK" 
+    default ""
+    help
+    bool "CONFIG_PARAM_NOT_CHECK"
+endmenu

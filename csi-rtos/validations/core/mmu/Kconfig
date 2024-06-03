@@ -1,0 +1,20 @@
+choice
+       prompt "select"
+       depends on BUILD_VAL_MMU
+       default BUILD_VAL_MMU01
+       help
+         select the test module
+
+config BUILD_VAL_MMU01
+       bool "build validation mmu01"
+       depends on BUILD_VAL_MMU
+       help
+         select the mmu test
+
+config BUILD_VAL_MMU01_CK610M
+       bool "build validation mmu01_ck610m"
+       depends on BUILD_VAL_MMU
+       help
+         select the mmu01 ck610m test
+
+endchoice

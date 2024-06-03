@@ -1,0 +1,32 @@
+choice
+        prompt "select"
+        default BUILD_VAL_DRIVER
+        help
+          select the test module
+
+config BUILD_VAL_DRIVER
+       bool "driver validation"
+       help
+          driver validation
+if BUILD_VAL_DRIVER
+source "validations/driver/Kconfig"
+endif
+
+config BUILD_VAL_CORE
+       bool "core validation"
+       help
+          core validation
+if BUILD_VAL_CORE
+source "validations/core/Kconfig"
+endif
+
+
+config BUILD_VAL_KERNEL
+       bool "kernel validation"
+       help
+          kernel validation
+if BUILD_VAL_KERNEL
+source "validations/kernel/Kconfig"
+endif
+
+endchoice

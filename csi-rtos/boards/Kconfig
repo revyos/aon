@@ -1,0 +1,4 @@
+if CHIP_VENDOR_THEAD
+source "boards/thead/Kconfig"
+endif
+

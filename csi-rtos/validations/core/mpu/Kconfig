@@ -1,0 +1,20 @@
+choice
+       prompt "select"
+       depends on BUILD_VAL_MPU
+       default BUILD_VAL_MPU01
+       help
+         select the test module
+
+config BUILD_VAL_MPU01
+       bool "build validation mpu01"
+       depends on BUILD_VAL_MPU
+       help
+         select the mpu test
+
+config BUILD_VAL_MPU01_CK610
+       bool "build validation mpu01_ck610"
+       depends on BUILD_VAL_MPU
+       help
+         select the mpu01 ck610 test
+
+endchoice

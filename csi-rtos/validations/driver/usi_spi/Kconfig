@@ -1,0 +1,14 @@
+choice
+       prompt "select"
+       depends on BUILD_VAL_USI_SPI
+       default BUILD_VAL_USI_SPI01
+       help
+         select the test module
+
+config BUILD_VAL_USI_SPI01
+       bool "build validation usi_spi01"
+       depends on BUILD_VAL_USI_SPI
+       help
+         select the usi_spi driver validation
+
+endchoice

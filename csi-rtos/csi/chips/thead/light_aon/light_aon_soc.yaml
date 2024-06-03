@@ -1,0 +1,52 @@
+yaml_file_type: soc         #文件属性
+
+vendor:                     #厂商信息字段
+    version: v1.0.0
+    license: |              #文件license，选填，若不填写则使用阿里巴巴license
+        NULL
+
+    file_description: |     #文件描述，选填，若不填写使用默认
+        NULL
+
+    chip: light_aon         #芯片名称
+
+    chip_vendor: thead     #芯片厂商
+
+cpu:
+    - idx: 0
+      name: e902m           #???????
+      arch: riscv
+      vendor: thead
+      version: v1.0
+      endian: little
+      irq_num: 32
+      mpu_regions: 0      #????????
+      icache: 0           #0 不支持 ， 1支持
+      dcache: 0
+      acess_region:
+          - {type: ROM,     start: 0x00000000, size: 0x10000}
+          - {type: EFLASH,  start: 0x10000000, size: 0x10000}
+
+clock:                                     #时钟源定义
+    - { name: EHS, value: 26450000 }       #外部高速时钟频率
+    - { name: ELS, value: 32768    }       #外部低速时钟频率
+    - { name: IHS, value: 26450000 }       #内部高速时钟频率
+    - { name: ILS, value: 32768    }       #内部低速时钟频率
+
+devices:                                   #外设定义
+    - { name: UART,              idx: NULL,    vendor: DW,    version: v1.0,               base: 0xB7014000,    size: 0x4000,   irq_n: 11,      is_driver: 1,    description: NULL }
+    - { name: GPIO,              idx: NULL,    vendor: DW,    version: v1.0,               base: 0xFFF41000,    size: 0x1000,   irq_n: 12,      is_driver: 1,    description: NULL }
+    - { name: RTC,               idx: NULL,    vendor: WJ,    version: v2.0,               base: 0xFFF40000,    size: 0x1000,   irq_n: 13,      is_driver: 1,    description: NULL }
+    - { name: IRQ,               idx: NULL,    vendor: NULL,  version: v1.0,               base: NULL,          size: 0,        irq_n: NULL,    is_driver: 1,    description: NULL }
+    - { name: IIC,               idx: 0,       vendor: DW,    version: v1.0,               base: 0xFFF4C000,    size: 0x1000,   irq_n: 16,      is_driver: 1,    description: NULL }
+    - { name: TIMER,             idx: 0,       vendor: DW,    version: v1.0,               base: 0xFFF4D000,    size: 0x14,     irq_n: 17,      is_driver: 1,    description: NULL }
+    - { name: TIMER,             idx: 1,       vendor: DW,    version: v1.0,               base: 0xFFF4D014,    size: 0x14,     irq_n: 18,      is_driver: 1,    description: NULL }
+    - { name: TIMER,             idx: 2,       vendor: DW,    version: v1.0,               base: 0xFFF4D028,    size: 0x14,     irq_n: 19,      is_driver: 1,    description: NULL }
+    - { name: TIMER,             idx: 3,       vendor: DW,    version: v1.0,               base: 0xFFF4D03C,    size: 0x14,     irq_n: 20,      is_driver: 1,    description: NULL }
+    - { name: DMA,               idx: 0,       vendor: DW,    version: v2.0,               base: 0x50016000,    size: 0x1000,   irq_n: 10,      is_driver: 1,    description: NULL }
+    - { name: PINMUX,            idx: NULL,    vendor: WJ,    version: sparrow_v1.0,       base: 0xFFCCD00000,  size: 0x10000,  irq_n: NULL,    is_driver: 1,    description: NULL }
+    - { name: IOC,               idx: NULL,    vendor: WJ,    version: v1.0,               base: 0xFFCCD00000,  size: 0x10000,  irq_n: NULL,    is_driver: 0,    description: NULL }
+    - { name: MBOX,              idx: NULL,    vendor: WJ,    version: v1.0,               base: 0xBFC4E000,    size: 0x2000,   irq_n: NULL,    is_driver: 1,    description: NULL }
+    - { name: WDT,               idx: NULL,    vendor: DW,    version: v1.0,               base: 0xBFC30000,    size: 0x1000,   irq_n: NULL,    is_driver: 1,    description: NULL }
+
+device_attr: NULL

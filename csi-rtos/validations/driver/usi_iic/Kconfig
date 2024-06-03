@@ -1,0 +1,14 @@
+choice
+       prompt "select"
+       depends on BUILD_VAL_USI_IIC
+       default BUILD_VAL_USI_IIC01
+       help
+         select the test module
+
+config BUILD_VAL_USI_IIC01
+       bool "build validation usi_iic01"
+       depends on BUILD_VAL_USI_IIC
+       help
+         select the usi_iic driver validation
+
+endchoice

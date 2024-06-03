@@ -1,0 +1,223 @@
+choice
+         prompt "select"
+         help
+           select the driver validation
+
+config BUILD_VAL_AES
+       bool "build validation aes"
+       depends on BUILD_VAL_DRIVER
+       help
+         select the aes driver validation
+
+if BUILD_VAL_AES
+source "validations/driver/aes/Kconfig"
+endif
+
+config BUILD_VAL_DMAC
+       bool "build validation dmac"
+       help
+         select the dmac driver validation
+
+if BUILD_VAL_DMAC
+source "validations/driver/dmac/Kconfig"
+endif
+
+config BUILD_VAL_GPIO
+       bool "build validation gpio"
+       help
+         select the gpio driver validation
+
+if BUILD_VAL_GPIO
+source "validations/driver/gpio/Kconfig"
+endif
+
+config BUILD_VAL_IIC
+       bool "build validation iic"
+       help
+         select the iic driver validation
+
+if BUILD_VAL_IIC
+source "validations/driver/iic/Kconfig"
+endif
+
+config BUILD_VAL_SPU_IIC
+       bool "build validation spu iic"
+       help
+         select the spu iic driver validation
+
+if BUILD_VAL_SPU_IIC
+source "validations/driver/spu_iic/Kconfig"
+endif
+
+config BUILD_VAL_USI_IIC
+       bool "build validation usi iic"
+       help
+         select the usi iic driver validation
+
+if BUILD_VAL_USI_IIC
+source "validations/driver/usi_iic/Kconfig"
+endif
+
+config BUILD_VAL_SHA
+       bool "build validation sha"
+       help
+         select the sha driver validation
+
+if BUILD_VAL_SHA
+source "validations/driver/sha/Kconfig"
+endif
+
+config BUILD_VAL_RSA
+       bool "build validation rsa"
+       help
+         select the rsa driver validation
+
+if BUILD_VAL_RSA
+source "validations/driver/rsa/Kconfig"
+endif
+
+config BUILD_VAL_TIMER
+       bool "build validation timer"
+       help
+         select the timer driver validation
+
+if BUILD_VAL_TIMER
+source "validations/driver/timer/Kconfig"
+endif
+
+config BUILD_VAL_USART
+       bool "build validation usart"
+       help
+         select the uart driver validation
+
+if BUILD_VAL_USART
+source "validations/driver/usart/Kconfig"
+endif
+
+config BUILD_VAL_SPU_USART
+       bool "build validation spu usart"
+       help
+         select the uart driver validation
+
+if BUILD_VAL_SPU_USART
+source "validations/driver/spu_usart/Kconfig"
+endif
+
+config BUILD_VAL_USI_USART
+       bool "build validation usi usart"
+       help
+         select the uart driver validation
+
+if BUILD_VAL_USI_USART
+source "validations/driver/usi_usart/Kconfig"
+endif
+
+config BUILD_VAL_TRNG
+       bool "build validation trng"
+       help
+         select the trng driver validation
+
+if BUILD_VAL_TRNG
+source "validations/driver/trng/Kconfig"
+endif
+
+config BUILD_VAL_CRC
+       bool "build validation crc"
+       help
+         select the crc driver validation
+
+if BUILD_VAL_CRC
+source "validations/driver/crc/Kconfig"
+endif
+
+config BUILD_VAL_EFLASH
+       bool "build validation eflash"
+       help
+         select the eflash driver validation
+
+if BUILD_VAL_EFLASH
+source "validations/driver/eflash/Kconfig"
+endif
+
+config BUILD_VAL_SPIFLASH
+       bool "build validation spiflash"
+       help
+         select the eflash driver validation
+
+if BUILD_VAL_SPIFLASH
+source "validations/driver/spiflash/Kconfig"
+endif
+
+config BUILD_VAL_SPI
+       bool "build validation spi"
+       help
+         select the spi driver validation
+
+if BUILD_VAL_SPI
+source "validations/driver/spi/Kconfig"
+endif
+
+config BUILD_VAL_SPU_SPI
+       bool "build validation spu spi"
+       help
+         select the spu spi driver validation
+
+if BUILD_VAL_SPU_SPI
+source "validations/driver/spu_spi/Kconfig"
+endif
+
+config BUILD_VAL_USI_SPI
+       bool "build validation usi spi"
+       help
+         select the usi spi driver validation
+
+if BUILD_VAL_USI_SPI
+source "validations/driver/usi_spi/Kconfig"
+endif
+
+config BUILD_VAL_WDT
+       bool "build validation wdt"
+       help
+         select the wdt driver validation
+
+if BUILD_VAL_WDT
+source "validations/driver/wdt/Kconfig"
+endif
+
+config BUILD_VAL_RTC
+       bool "build validation rtc"
+       help
+         select the rtc driver validation
+
+if BUILD_VAL_RTC
+source "validations/driver/rtc/Kconfig"
+endif
+
+config BUILD_VAL_PWM
+       bool "build validation pwm"
+       help
+         select the pwm driver validation
+
+if BUILD_VAL_PWM
+source "validations/driver/pwm/Kconfig"
+endif
+
+config BUILD_VAL_ETH
+       bool "build validation eth"
+       help
+         select the ethernet driver validation
+
+if BUILD_VAL_ETH
+source "validations/driver/eth/Kconfig"
+endif
+
+config BUILD_VAL_I2S
+       bool "build validation i2s"
+       help
+         select the ethernet driver validation
+
+if BUILD_VAL_I2S
+source "validations/driver/i2s/Kconfig"
+endif
+
+endchoice

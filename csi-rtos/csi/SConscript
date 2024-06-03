@@ -1,0 +1,52 @@
+#! /bin/env python
+
+Import('defconfig')
+
+lib_name = 'csi'
+
+installs = [
+    ('include/csi/', Glob('csi_core/include/*.h')),
+    ('include/csi/', Glob('csi_driver/include/*.h')),
+    ('include/csi/drivers/sdmmc/core', Glob('drivers/sdmmc/core/*.h')),
+    ('include/csi/drivers/sdmmc/host', Glob('drivers/sdmmc/host/*.h')),
+
+    ('include/csi/common', Glob('csi_driver/csky/common/include/*.h')),
+    ('include/csi/chip/ch2201', Glob('csi_driver/csky/ch2201/include/*.h')),
+    ('include/csi/chip/yunvoice', Glob('csi_driver/csky/yunvoice/include/*.h')),
+    ('include/csi/chip/pangu', Glob('csi_driver/csky/pangu/include/*.h')),
+    ('include/csi/chip/sc5654a', Glob('csi_driver/silan/sc5654a/include/*.h')),
+    ('include/csi/chip/sc5654a', [
+        'csi_driver/silan/common/include/silan_adev.h',
+        'csi_driver/silan/common/include/silan_syscfg.h',
+        'csi_driver/silan/common/include/silan_syscfg_regs.h',
+        'csi_driver/silan/common/include/silan_iomux.h',
+        'csi_driver/silan/common/include/silan_i2s.h',
+        'csi_driver/silan/common/include/silan_types.h',
+        'csi_driver/silan/common/include/silan_codec.h',
+        'csi_driver/silan/common/include/silan_dmac.h',
+        'csi_driver/silan/common/include/silan_dmac_regs.h',
+        'csi_driver/silan/common/include/ap1508_datatype.h',
+        'csi_driver/silan/common/include/ap1508.h',
+        'csi_driver/silan/common/include/dw_mmc.h',
+        'csi_driver/silan/common/include/silan_common.h',
+        'csi_driver/silan/common/include/dw_mmc_reg.h',
+        'csi_driver/silan/common/include/silan_adc_regs.h',
+        'csi_driver/silan/common/include/silan_adc_csi.h',
+        'csi_driver/silan/common/include/silan_gpio_regs.h',
+        'csi_driver/silan/common/include/silan_iomux_regs.h',
+        'csi_driver/silan/common/include/silan_gpio_source.h',
+        'csi_driver/silan/common/include/silan_gpio.h',
+        'csi_driver/silan/common/include/silan_iomux.h',
+        'csi_driver/silan/common/include/silan_buffer.h',
+        'csi_driver/silan/common/include/silan_pmu.h',
+        'csi_driver/silan/common/include/silan_pmu_regs.h',
+        'csi_driver/silan/common/include/silan_uart_regs.h',
+    ]),
+    ('include/rhino/', Glob('csi_kernel/rhino/core/include/*.h')),
+    ('include/rhino/', Glob('csi_kernel/rhino/arch/include/*.h')),
+
+    ('lib/' + defconfig.CHIP + "/" + defconfig.CPU, 'out/libcsi.a'),
+]
+
+defconfig.library(lib_name, None, INSTALL=installs)
+

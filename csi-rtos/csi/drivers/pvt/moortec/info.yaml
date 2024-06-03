@@ -1,0 +1,11 @@
+name: PVT
+vendor: MOORTEC
+license: Copyright (C) 2017-2021 Alibaba Group Holding Limited
+description: moortec pvt 
+type: devices
+
+versions:
+    v1.0:
+        drv_path: v1.0
+        test_path: test/v1.0
+        rtl_path: xxxx

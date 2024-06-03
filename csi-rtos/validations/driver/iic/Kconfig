@@ -1,0 +1,25 @@
+choice
+       prompt "select"
+       depends on BUILD_VAL_IIC
+       default BUILD_VAL_IIC01
+       help
+         select the test module
+
+config BUILD_VAL_IIC01
+       bool "build validation iic01"
+       depends on BUILD_VAL_IIC
+       help
+         select the iic driver validation
+
+config BUILD_VAL_IIC02
+       bool "build validation iic02"
+       depends on BUILD_VAL_IIC
+       help
+         select the iic driver validation
+
+config BUILD_VAL_IIC_SPEED
+       bool "build validation iic_speed"
+       depends on BUILD_VAL_IIC
+       help
+         select the iic driver validation
+endchoice

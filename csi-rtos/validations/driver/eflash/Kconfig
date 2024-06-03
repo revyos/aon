@@ -1,0 +1,19 @@
+choice
+       prompt "select"
+       depends on BUILD_VAL_EFLASH
+       default BUILD_VAL_EFLASH01
+       help
+         select the test module
+
+config BUILD_VAL_EFLASH01
+       bool "build validation eflash01"
+       depends on BUILD_VAL_EFLASH
+       help
+         select the eflash driver validation
+
+config BUILD_VAL_EFLASH02
+       bool "build validation eflash02"
+       depends on BUILD_VAL_EFLASH
+       help
+         select the eflash driver validation
+endchoice

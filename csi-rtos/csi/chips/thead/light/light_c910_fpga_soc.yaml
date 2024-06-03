@@ -1,0 +1,68 @@
+yaml_file_type: soc         #文件属性
+
+vendor:                     #厂商信息字段
+    version: v1.0.0
+    license: |              #文件license，选填，若不填写则使用阿里巴巴license
+        NULL
+
+    file_description: |     #文件描述，选填，若不填写使用默认
+        NULL
+
+    chip: light #芯片名称
+
+    chip_vendor: thead      #芯片厂商
+
+cpu:
+    - idx: 0
+      name: c910
+      arch: riscv
+      vendor: thead
+      version: v1.0
+      endian: little
+      irq_num: 120
+      mpu_regions: 0
+      icache: 0           #0 不支持 ， 1支持
+      dcache: 0
+      acess_region:
+          - {type: ROM,     start: 0x00000000, size: 0x10000}
+          - {type: EFLASH,  start: 0x10000000, size: 0x10000}
+
+clock:                                     #时钟源定义
+    - { name: EHS, value: 20000000 }       #外部高速时钟频率
+    - { name: ELS, value: 32768    }       #外部低速时钟频率
+    - { name: IHS, value: 20000000 }       #内部高速时钟频率
+    - { name: ILS, value: 32768    }       #内部低速时钟频率
+
+devices:                                   #外设定义
+    - { name: GPIO,              idx: NULL,    vendor: DW,    version: v1.0,               base: 0xFFE7004000,  size: 0x10000,   irq_n: 56,      is_driver: 1,    description: NULL }
+    - { name: SPI,               idx: NULL,    vendor: DW,    version: v2.0,               base: 0xFFCC300000,  size: 0x10000,   irq_n: 54,      is_driver: 1,    description: NULL }
+    - { name: QSPI,              idx: 0,       vendor: DW,    version: v1.0,               base: 0xFFF700C000,  size: 0x10000,   irq_n: 52,    is_driver: 1,    description: NULL }
+    - { name: QSPI,              idx: 1,       vendor: DW,    version: v1.0,               base: 0xFFE8000000,  size: 0x10000,   irq_n: 53,    is_driver: 1,    description: NULL }
+    - { name: PINMUX,            idx: NULL,    vendor: WJ,    version: light_v1.0,         base: 0xFFEF01C000,  size: 0x4000,    irq_n: NULL,    is_driver: 1,    description: NULL }
+    - { name: UART,              idx: 0,       vendor: DW,    version: v1.0,               base: 0xFFE7014000,  size: 0x10000,   irq_n: 36,      is_driver: 1,    description: NULL }
+    - { name: IRQ,               idx: NULL,    vendor: NULL,  version: v1.0,               base: NULL,          size: 0,         irq_n: NULL,    is_driver: 1,    description: NULL }
+    - { name: TIMER,             idx: 0,       vendor: DW,    version: v1.0,               base: 0xFFEFC32000,  size: 0x14,      irq_n: 16,      is_driver: 1,    description: NULL }
+    - { name: TIMER,             idx: 1,       vendor: DW,    version: v1.0,               base: 0xFFCC100014,  size: 0x14,      irq_n: 17,      is_driver: 1,    description: NULL }
+    - { name: TIMER,             idx: 2,       vendor: DW,    version: v1.0,               base: 0xFFCC100028,  size: 0x14,      irq_n: 18,      is_driver: 1,    description: NULL }
+    - { name: TIMER,             idx: 3,       vendor: DW,    version: v1.0,               base: 0xFFCC10003c,  size: 0x14,      irq_n: 19,      is_driver: 1,    description: NULL }
+    - { name: IIC,               idx: 0,       vendor: DW,    version: v1.0,               base: 0xFFCCA00000,  size: 0x10000,   irq_n: 34,      is_driver: 1,    description: NULL }
+    - { name: IIC,               idx: 1,       vendor: DW,    version: v1.0,               base: 0xFFCCB00000,  size: 0x10000,   irq_n: 35,      is_driver: 1,    description: NULL }
+    - { name: WDT,               idx: NULL,    vendor: DW,    version: v1.0,               base: 0xFFEFC30000,  size: 0x10000,   irq_n: 111,      is_driver: 1,    description: NULL }
+    - { name: DMA,               idx: NULL,    vendor: DW,    version: axi_dma,            base: 0xFFC8000000,  size: 0x10000,   irq_n: 19,      is_driver: 1,    description: NULL }
+    - { name: IOC,               idx: NULL,    vendor: WJ,    version: v1.0,               base: 0xFFCCD00000,  size: 0x10000,   irq_n: NULL,    is_driver: 0,    description: NULL }
+    - { name: SPINAND,           idx: NULL,    vendor: WJ,    version: v1.0,               base: NULL,          size: 0,         irq_n: NULL,    is_driver: 1,    description: NULL }
+    - { name: SPIFLASH,          idx: NULL,    vendor: WJ,    version: v2.0,               base: NULL,          size: 0,         irq_n: NULL,    is_driver: 1,    description: NULL }
+    - { name: SDHC,              idx: NULL,    vendor: DW,    version: v1.0,               base: 0xFFE7090000,  size: 0x1000,    irq_n: 64,      is_driver: 1,    description: NULL }
+      #    - { name: USB,               idx: NULL,    vendor: DW,    version: v3.0,               base: 0xFFE7040000,  size: 0x10000,   irq_n: 68,      is_driver: 1,    description: NULL }
+
+device_attr: NULL
+
+#wake_up :
+#   - { name: WJ_I2S0, num: 1}
+
+#
+#startup_config:
+#    -{ addr: xxxxxx, value: xxxxxxx }
+
+#middleware :
+#    -{ name: xxx, version: xxx }

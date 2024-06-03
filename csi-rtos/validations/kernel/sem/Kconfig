@@ -1,0 +1,21 @@
+choice
+       prompt "select"
+       depends on BUILD_VAL_SEM
+       default BUILD_VAL_SEM01
+       help
+         select the test module
+
+config BUILD_VAL_SEM01
+       bool "build validation sem01"
+       depends on BUILD_VAL_SEM
+       help
+         select the sem test
+
+config BUILD_VAL_SEM02
+       bool "build validation sem02"
+       depends on BUILD_VAL_SEM
+       help
+         select the sem test
+
+
+endchoice
