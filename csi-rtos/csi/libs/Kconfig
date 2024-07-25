@@ -1,0 +1,50 @@
+menu "Debug options"
+
+config SYSLOG_COLORFUL
+	bool "Colorful syslog"
+	default n
+	help
+	  syslog will be colorful.
+	  If you use simple tools to debug, do not select it.
+
+config SIMPLE_PRINTF
+   bool "use simple printf"
+   default n
+   help
+     simple printf is minimum code size, support less format
+
+choice
+     prompt "System log level"
+     default SYSLOG_LEVEL_NONE
+     help
+       Set the global system log level.
+       And each module can also set its own log level.
+
+config SYSLOG_LEVEL_NONE
+     bool "None"
+     help
+       Close any syslog
+
+config SYSLOG_LEVEL_ERROR
+     bool "Error"
+     help
+       Only error syslog shows
+
+config SYSLOG_LEVEL_WARN
+     bool "Error/Warn"
+     help
+       error/warning syslog shows
+
+config SYSLOG_LEVEL_INFO
+     bool "Error/Warn/Info"
+     help
+       error/warning/info syslog shows
+
+config SYSLOG_LEVEL_DEBUG
+     bool "Error/Warn/Info/Debug"
+     help
+       error/warning/info/debug syslog shows
+
+endchoice
+
+endmenu

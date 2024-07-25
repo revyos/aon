@@ -1,0 +1,19 @@
+choice
+       prompt "select"
+       depends on BUILD_VAL_GPIO
+       default BUILD_VAL_GPIO01
+       help
+         select the test module
+
+config BUILD_VAL_GPIO01
+       bool "build validation gpio01"
+       depends on BUILD_VAL_GPIO
+       help
+         select the gpio driver validation
+
+config BUILD_VAL_GPIO02
+       bool "build validation gpio02"
+       depends on BUILD_VAL_GPIO
+       help
+         select the gpio driver validation
+endchoice

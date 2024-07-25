@@ -1,0 +1,19 @@
+choice
+       prompt "select"
+       depends on BUILD_VAL_RSA
+       default BUILD_VAL_RSA01
+       help
+         select the test module
+
+config BUILD_VAL_RSA01
+       bool "build validation rsa01"
+       depends on BUILD_VAL_RSA
+       help
+         select the rsa driver validation
+
+config BUILD_VAL_RSA02
+       bool "build validation rsa02"
+       depends on BUILD_VAL_RSA
+       help
+         select the rsa driver validation
+endchoice

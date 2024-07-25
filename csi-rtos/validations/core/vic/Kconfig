@@ -1,0 +1,14 @@
+choice
+       prompt "select"
+       depends on BUILD_VAL_VIC
+       default BUILD_VAL_VIC01
+       help
+         select the test module
+
+config BUILD_VAL_VIC01
+       bool "build validation vic01"
+       depends on BUILD_VAL_VIC
+       help
+         select the vic test
+
+endchoice

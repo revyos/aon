@@ -1,0 +1,14 @@
+choice
+       prompt "select"
+       depends on BUILD_VAL_SPU_SPI
+       default BUILD_VAL_SPU_SPI01
+       help
+         select the test module
+
+config BUILD_VAL_SPU_SPI01
+       bool "build validation spu_spi01"
+       depends on BUILD_VAL_SPU_SPI
+       help
+         select the spu_spi driver validation
+
+endchoice

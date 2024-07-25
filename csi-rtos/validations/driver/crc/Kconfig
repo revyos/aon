@@ -1,0 +1,19 @@
+choice
+       prompt "select"
+       depends on BUILD_VAL_CRC
+       default BUILD_VAL_CRC01
+       help
+         select the test module
+
+config BUILD_VAL_CRC01
+       bool "build validation crc01"
+       depends on BUILD_VAL_CRC
+       help
+         select the crc driver validation
+
+config BUILD_VAL_CRC02
+       bool "build validation crc02"
+       depends on BUILD_VAL_CRC
+       help
+         select the crc driver validation
+endchoice

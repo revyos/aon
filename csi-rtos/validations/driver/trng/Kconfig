@@ -1,0 +1,19 @@
+choice
+       prompt "select"
+       depends on BUILD_VAL_TRNG
+       default BUILD_VAL_TRNG01
+       help
+         select the test module
+
+config BUILD_VAL_TRNG01
+       bool "build validation trng01"
+       depends on BUILD_VAL_TRNG
+       help
+         select the trng driver validation
+
+config BUILD_VAL_TRNG02
+       bool "build validation trng02"
+       depends on BUILD_VAL_TRNG
+       help
+         select the trng driver validation
+endchoice

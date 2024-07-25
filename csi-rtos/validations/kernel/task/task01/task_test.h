@@ -1,0 +1,28 @@
+/*
+ * Copyright (C) 2017-2019 Alibaba Group Holding Limited
+ */
+
+
+/******************************************************************************
+ * @file     task_test.h
+ * @brief     head file
+ * @version  V1.0
+ * @date     15. July 2017
+ ******************************************************************************/
+
+#ifndef TASK_TEST_H
+#define TASK_TEST_H
+
+#define MYASSERT(value) do {ASSERT_TRUE(value); if ((int)(value) == 0) \
+        { \
+            test_case_critical_enter(); \
+            test_case_check_err++;  \
+            test_case_critical_exit(); \
+            printf("task test is [FAIL %d], func %s, line %d\n", \
+                   ++test_case_check_err, __FUNCTION__, __LINE__); \
+        }  \
+    } while (0)
+
+
+#endif /* TASK_TEST_H */
+

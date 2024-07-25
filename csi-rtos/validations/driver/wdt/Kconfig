@@ -1,0 +1,19 @@
+choice
+       prompt "select"
+       depends on BUILD_VAL_WDT
+       default BUILD_VAL_WDT01
+       help
+         select the test module
+
+config BUILD_VAL_WDT01
+       bool "build validation wdt01"
+       depends on BUILD_VAL_WDT
+       help
+         select the wdt driver validation
+
+config BUILD_VAL_WDT02
+       bool "build validation wdt02"
+       depends on BUILD_VAL_WDT
+       help
+         select the wdt driver validation
+endchoice

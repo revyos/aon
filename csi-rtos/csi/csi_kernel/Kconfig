@@ -1,0 +1,64 @@
+menu "Rtos kernel options"
+
+choice
+    prompt "kernel type selection"
+    default KERNEL_NONE
+    help
+      select the os
+config KERNEL_NONE
+     bool "no rtos"
+     help
+       no rtos
+config KERNEL_FREERTOS
+     bool "freeRTOS"
+     help
+       os of freeRTOS
+config KERNEL_UCOS
+     bool "ucos-iii"
+     help
+       os of ucos-iii
+config KERNEL_RHINO
+     bool "rhino"
+     help
+       os of rhino
+endchoice
+
+
+endmenu
+
+
+menu "OS support features"
+config HAVE_VIC
+     bool "interrupt nesting controller(VIC/CLIC)"
+     default y
+     depends on (!CPU_CK810 && !CPU_CK807 && !CPU_CK610E && !CPU_CK610EF)
+     help
+       interrupt nesting and tspend
+
+config SUPPORT_TSPEND
+     bool "support tspend"
+     depends on (HAVE_VIC && !SYSTEM_SECURE || HAVE_VIC && ARCH_RV32)
+     default y
+
+config SEPARATE_IRQ_SP
+     bool "hardware separate interrupt stack pointer"
+     depends on SUPPORT_TSPEND
+     default y
+config ARCH_INTERRUPTSTACK
+     int "stack for intrrupt"
+     default 4096
+config OS_TRACE
+     bool "os trace"
+     default n
+
+endmenu
+
+menu "Kernel memory management"
+config MM_DETECT_ERROR
+     bool "nuttx memory detect"
+     default n
+
+#config MM_KERNEL_HEAPSIZE
+#     int "heapsize for kernel memory management"
+#     default 32768
+endmenu

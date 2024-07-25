@@ -1,0 +1,21 @@
+mtb_version: 4
+chip: light_aon 
+
+diff:
+  digest_type: SHA1
+  signature_type: RSA1024
+  fota_version: 0
+  ram_buf: 50      #DEC     KB   ( max ram need)
+  flash_buf: 16     #DEC     KB   ( buffer size)
+  flash_sector: 4096 #DEC     byte ( flash sector)
+  diff_mode: 010    #BIN
+  double_control: 1
+flash:
+  sector: 4096       # Bytes
+  size: 252144 #256kb $(sector count) * sector
+
+partitions:
+  - { name: prim,   address: 0x18200000, size: 0x32000, verify: true, update: DIFF}
+  - { name: imtb,   address: 0x18032100, size: 0x01000 }
+  - { name: bmtb,   address: 0x18033200, size: 0x01000 }
+  - { name: boot,   address: 0x18034300, size: 0x00100 }

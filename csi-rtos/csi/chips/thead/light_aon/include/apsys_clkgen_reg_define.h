@@ -1,0 +1,19 @@
+#ifndef APSYS_CLKGEN_REG_OFFSET_DEFINE_H
+#define APSYS_CLKGEN_REG_OFFSET_DEFINE_H
+
+#define REG_APSYS_CLKGEN_TEE_BASE		0xFF010000
+#define REG_APSYS_CLKGEN_REE_BASE		0xBF010000
+
+#define REG_AP_PERI_CLK_CFG			(REG_APSYS_CLKGEN_REE_BASE + 0x204)
+#define REG_AP_C910_CORE_CLK_TEECFG (REG_APSYS_CLKGEN_TEE_BASE + 0x1104)
+#define REG_AP_NPU_CCLK_CFG			(REG_APSYS_CLKGEN_REE_BASE + 0x1c8)
+
+#define I2C0_CLK_EN					(1 << 5)
+#define I2C1_CLK_EN					(1 << 4)
+#define I2C2_CLK_EN					(1 << 3)
+#define I2C3_CLK_EN					(1 << 2)
+#define I2C4_CLK_EN					(1 << 1)
+#define I2C5_CLK_EN					(1 << 0)
+#define PWM_CLK_EN					(1 << 18)
+#define NPU_CORE_CLK_EN				(1 << 4)
+#endif

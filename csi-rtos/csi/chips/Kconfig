@@ -1,0 +1,39 @@
+choice
+      prompt "chip vendor select"
+      default CHIP_VENDOR_THEAD
+      help
+        select the chip vendor
+
+config CHIP_VENDOR_THEAD
+      bool "t-head"
+      help
+        select the chip vendor thead
+
+config CHIP_VENDOR_SILAN
+      bool "silan"
+      help
+        select the chip vendor silan
+
+endchoice
+
+config CHIP_VENDOR_STR
+    string
+    default "thead"      if CHIP_VENDOR_THEAD
+    default "silan"      if CHIP_VENDOR_SILAN
+
+
+if CHIP_VENDOR_THEAD
+source "csi/chips/thead/Kconfig"
+endif
+
+if CHIP_VENDOR_SILAN
+endif
+
+menu "Low Power Manager options"
+
+config PM
+    bool "power manage"
+    default n
+    help
+      select the pmu driver
+endmenu

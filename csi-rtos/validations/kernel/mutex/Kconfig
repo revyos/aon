@@ -1,0 +1,14 @@
+choice
+       prompt "select"
+       depends on BUILD_VAL_MUTEX
+       default BUILD_VAL_MUTEX01
+       help
+         select the test module
+
+config BUILD_VAL_MUTEX01
+       bool "build validation mutex01"
+       depends on BUILD_VAL_MUTEX
+       help
+         select the mutex test
+
+endchoice

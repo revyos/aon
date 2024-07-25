@@ -1,0 +1,25 @@
+choice
+       prompt "select"
+       depends on BUILD_VAL_SPI
+       default BUILD_VAL_SPI01
+       help
+         select the test module
+
+config BUILD_VAL_SPI01
+       bool "build validation spi01"
+       depends on BUILD_VAL_SPI
+       help
+         select the spi driver validation
+
+config BUILD_VAL_SPI02
+       bool "build validation spi02"
+       depends on BUILD_VAL_SPI
+       help
+         select the spi driver validation
+
+config BUILD_VAL_SPI_SPEED
+       bool "build validation spi_speed"
+       depends on BUILD_VAL_SPI
+       help
+         select the spi driver validation
+endchoice

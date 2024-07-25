@@ -1,0 +1,51 @@
+choice
+       prompt "select"
+       help
+         select the core validation
+
+config BUILD_VAL_CACHE
+       bool "test core cache"
+       help
+          select the core cache test
+
+if BUILD_VAL_CACHE
+source "validations/core/cache/Kconfig"
+endif
+
+config BUILD_VAL_CALCULATION
+       bool "test core calculation"
+       help
+          select the core calculation test
+
+if BUILD_VAL_CALCULATION
+source "validations/core/calculation/Kconfig"
+endif
+
+config BUILD_VAL_MMU
+       bool "test core mmu"
+       help
+          select the core mmu test
+
+if BUILD_VAL_MMU
+source "validations/core/mmu/Kconfig"
+endif
+
+config BUILD_VAL_MPU
+       bool "test core mpu"
+       help
+          select the core mpu test
+
+if BUILD_VAL_MPU
+source "validations/core/mpu/Kconfig"
+endif
+
+config BUILD_VAL_VIC
+       bool "test core vic"
+       help
+          select the core vic test
+
+if BUILD_VAL_VIC
+source "validations/core/vic/Kconfig"
+endif
+
+endchoice

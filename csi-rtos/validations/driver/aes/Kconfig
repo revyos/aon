@@ -1,0 +1,19 @@
+choice
+       prompt "select"
+       depends on BUILD_VAL_AES
+       default BUILD_VAL_AES01
+       help
+         select the test module
+
+config BUILD_VAL_AES01
+       bool "build validation aes01"
+       depends on BUILD_VAL_AES
+       help
+         select the aes driver validation
+
+config BUILD_VAL_AES02
+       bool "build validation aes02"
+       depends on BUILD_VAL_AES
+       help
+         select the aes driver validation
+endchoice

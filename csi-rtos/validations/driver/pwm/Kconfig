@@ -1,0 +1,19 @@
+choice
+       prompt "select"
+       depends on BUILD_VAL_PWM
+       default BUILD_VAL_PWM01
+       help
+         select the test module
+
+config BUILD_VAL_PWM01
+       bool "build validation pwm01"
+       depends on BUILD_VAL_PWM
+       help
+         select the pwm driver validation
+
+config BUILD_VAL_PWM02
+       bool "build validation pwm02"
+       depends on BUILD_VAL_PWM
+       help
+         select the pwm driver validation
+endchoice

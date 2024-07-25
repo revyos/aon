@@ -1,0 +1,797 @@
+choice
+     prompt "board select"
+     depends on CHIP_WUJIAN100_OPEN
+     help
+       select the board
+
+config BOARD_WUJIAN100_OPEN_EVB
+     bool "wujian100_open evb"
+     help
+       select the board type is wujian100_open_evb
+endchoice
+
+choice
+     prompt "board select"
+     depends on CHIP_CB2201
+     help
+       select the board
+
+config BOARD_PHOBOS_EVB
+     bool "phobos evb"
+     help
+       select the board type is phobos_evb
+endchoice
+
+choice
+     prompt "board select"
+     depends on CHIP_SMARTL || CHIP_SMARTL_CK802 || CHIP_SMARTL_CK803|| CHIP_SMARTL_CK804F|| CHIP_SMARTL_CK804EF|| CHIP_SMARTL_CK805F
+     help
+       select the board
+
+config BOARD_SMARTL_801_EVB
+     bool "smartl01 evb"
+     depends on CPU_E801 || CPU_CK801
+     help
+       select the board type is smartl01_evb
+
+config BOARD_SMARTL_802_EVB
+     bool "smartl02 evb"
+     depends on CPU_E802 || CPU_E802T || CPU_S802 || CPU_S802T || CPU_CK802
+     help
+       select the board type is smartl_80x_evb
+
+config BOARD_SMARTL_803_EVB
+     bool "smartl03 evb"
+     depends on CPU_E803 || CPU_E803T || CPU_S803 || CPU_S803T || CPU_CK803 || CPU_CK803F || CPU_CK803EF || CPU_CK803ER1 || CPU_CK803ER2 || CPU_CK803ER3 || CPU_CK803EFR1 || CPU_CK803EFR2 || CPU_CK803EFR3
+     help
+       select the board type is smartl_80x_evb
+
+config BOARD_SMARTL_804_EVB
+     bool "smartl04 evb"
+     depends on CPU_E804D || CPU_E804DT || CPU_E804F || CPU_E804FT || CPU_E804DF || CPU_E804DFT || CPU_CK804EF
+     help
+       select the board type is smartl_80x_evb
+
+config BOARD_SMARTL_805_EVB
+     bool "smartl05 evb"
+     depends on CPU_I805 || CPU_I805F || CPU_CK805 || CPU_CK805F
+     help
+       select the board type is smartl_80x_evb
+endchoice
+
+choice
+     prompt "board select"
+     depends on CHIP_CH2301
+     help
+       select the board
+
+config BOARD_CB2301
+     bool "cb2301"
+     help
+       select the board type is hobbit_evb
+endchoice
+
+choice
+     prompt "board select"
+     depends on CHIP_CH6101
+     help
+       select the board
+
+config BOARD_CH6101_CPU0_FPGA
+     depends on CHIP_CH6101_CPU0
+     bool "ch6101_ck803_fpga"
+     depends on CPU_CK803
+     help
+       select the board type is ch6101_cpu0_fpga
+
+config BOARD_CH6101_CPU1_FPGA
+     depends on CHIP_CH6101_CPU1
+     bool "ch6101_ck802_fpga"
+     depends on CPU_CK802
+     help
+       select the board type is ch6101_cpu1_fpga
+
+config BOARD_CH6101_CPU0_EVB
+     depends on CHIP_CH6101_CPU0
+     bool "ch6101_ck803_evb"
+     depends on CPU_CK803
+     help
+       select the board type is ch6101_cpu0_evb
+
+config BOARD_CH6101_CPU1_EVB
+     depends on CHIP_CH6101_CPU1
+     bool "ch6101_ck802_evb"
+     depends on CPU_CK802
+     help
+       select the board type is ch6101_cpu1_evb
+
+endchoice
+
+choice
+     prompt "board select"
+     depends on CHIP_HOBBIT4
+     help
+       select the board
+
+config BOARD_HOBBIT4_EVB
+     bool "hobbit4_evb"
+     help
+       select the board type is hobbit4_evb
+endchoice
+
+choice
+     prompt "board select"
+     depends on CHIP_JUPITER_BC
+     help
+       select the board
+
+config BOARD_JUPITER_E906FD_BC_FPGA
+     bool "jupiter_e906fd_bc_fpga"
+     help
+       select the board type is jupiter_e906fd_bc_fpga
+endchoice
+
+choice
+     prompt "board select"
+     depends on CHIP_JUPITER_BC_MPW_1
+     help
+       select the board
+
+config BOARD_JUPITER_E906FD_BC_MPW_1
+     bool "jupiter_e906fd_bc_mpw_1"
+     help
+       select the board type is jupiter_e906fd_bc_mpw_1
+endchoice
+
+choice
+     prompt "board select"
+     depends on CHIP_JUPITER_BC_MPW_2
+     help
+       select the board
+
+config BOARD_JUPITER_E906FD_BC_MPW_2_FPGA
+     bool "jupiter_e906fd_bc_mpw_2_fpga"
+     help
+       select the board type is jupiter_e906fd_bc_mpw_2_fpga
+endchoice
+
+choice
+     prompt "board select"
+     depends on CHIP_LIGHT_AON
+     help
+       select the board
+
+config BOARD_LIGHT_AON
+     bool "light_aon"
+     help
+       select the board type is light_full_mask sv board
+
+config BOARD_LIGHT_BEAGLE
+     bool "light_beagle"
+     help
+       select the board type is beagle board
+
+config BOARD_LIGHT_AON_A_REF
+     bool "light_aon_a_ref"
+     help
+       select the board type is light_full_mask reference board 
+
+config BOARD_LIGHT_AON_A
+     bool "light_aon_a"
+     help
+       select the board type is light_full_mask sv board a
+
+config BOARD_LIGHT_AON_B
+     bool "light_aon_b"
+     help
+       select the board type is light_full_mask sv board b
+
+config BOARD_LIGHT_AON_B_REF
+     bool "light_aon_b_ref"
+     help
+       select the board type is light_full_mask reference board
+
+config BOARD_LIGHT_AON_B_POWER
+     bool "light_aon_b_power"
+     help
+       select the board type is light_full_mask power board
+
+config BOARD_LIGHT_AON_ANT_DISCRETE
+     bool "light_aon_ant_discrete"
+     help
+       select the board type is light_full_mask sv board b
+
+config BOARD_LIGHT_AON_ANT_EVT
+     bool "light_aon_ant_evt"
+     help
+       select the board type is light_full_mask ant_evt board 
+
+config BOARD_LIGHT_LPI4A
+	bool "light_lpi4a"
+	help
+		select the board type is light_full_mask lpi4a board
+
+endchoice
+
+choice
+     prompt "board select"
+     depends on CHIP_AVFS
+     help
+       select the board
+
+config BOARD_AVFS_FPGA
+     bool "avfs_fpga"
+     help
+       select the board type is avfs_fpga
+endchoice
+
+choice
+     prompt "board select"
+     depends on CHIP_JUPITER_LC
+     help
+       select the board
+
+config BOARD_JUPITER_E906FD_LC_FPGA
+     bool "jupiter_e906fd_lc_fpga"
+     help
+       select the board type is jupiter_e906fd_lc_fpga
+endchoice
+
+choice
+     prompt "board select"
+     depends on CHIP_JUPITER_LC_MPW_1
+     help
+       select the board
+
+config BOARD_JUPITER_E906FD_LC_MPW_1
+     bool "jupiter_e906fd_lc_mpw_1"
+     help
+       select the board type is jupiter_e906fd_lc_mpw_1
+endchoice
+
+choice
+     prompt "board select"
+     depends on CHIP_JUPITER_LC_MPW_2
+     help
+       select the board
+
+config BOARD_JUPITER_E906FD_LC_MPW_2_FPGA
+     bool "jupiter_e906fd_lc_mpw_2_fpga"
+     help
+       select the board type is jupiter_e906fd_lc_mpw_2_fpga
+endchoice
+
+choice
+     prompt "board select"
+     depends on CHIP_SPARROW
+     help
+       select the board
+
+config BOARD_SPARROW_C906_FPGA
+     bool "sparrow_c906_fpga"
+     help
+       select the board type is sparrow_c906_fpga
+endchoice
+
+choice
+     prompt "board select"
+     depends on CHIP_LIGHT
+     help
+       select the board
+
+config BOARD_LIGHT_C910_FPGA
+     bool "light_c910_fpga"
+     help
+       select the board type is light_c910_fpga
+endchoice
+
+choice
+     prompt "board select"
+     depends on CHIP_LIGHT_FM
+     help
+       select the board
+	   
+config BOARD_LIGHT_C910_FM_FPGA
+     bool "light_c910_fm_fpga"
+     help
+       select the board type is light_c910_fm_fpga
+endchoice
+
+choice
+     prompt "board select"
+     depends on CHIP_DANICA
+     help
+       select the board
+
+config BOARD_DANICA_EVB
+     bool "danica_evb"
+     help
+       select the board type is danica_evb
+
+config BOARD_DANICA_FPGA
+     bool "danica_fpga"
+     help
+       select the board type is danica_fpga
+endchoice
+
+choice
+     prompt "board select"
+     depends on CHIP_HOBBIT3_SE
+     help
+       select the board
+
+config BOARD_HOBBIT3_SE_EVB
+     bool "hobbit3_se evb"
+     help
+       select the board type is hobbit_evb
+endchoice
+
+choice
+     prompt "board select"
+     depends on CHIP_SC6138
+     help
+       select the board
+
+config BOARD_SC6138_EVB
+     bool "sc6138 evb"
+     help
+       select the board type is sc6138_evb
+endchoice
+
+choice
+     prompt "board select"
+     depends on CHIP_CH2201
+     help
+       select the board
+
+config BOARD_CB2201
+     bool "cb2201"
+    # select LPM
+     help
+       select the board type is hobbit_evb
+endchoice
+
+choice
+     prompt "board select"
+     depends on CHIP_YUNVOICE
+     help
+       select the board
+
+config BOARD_FANGTANG_CPU0_EVB
+     depends on CHIP_YUNVOICE_CPU0
+     bool "fangtang cpu0 evb"
+     help
+       select the board type is fangtang_cpu0_evb
+
+config BOARD_FANGTANG_CPU1_EVB
+     depends on CHIP_YUNVOICE_CPU1
+     bool "fangtang cpu1 evb"
+     help
+       select the board type is fangtang_cpu1_evb
+
+config BOARD_YUNVOICE_CPU0_EVB
+     depends on CHIP_YUNVOICE_CPU0
+     bool "yunvoice cpu0 evb"
+     help
+       select the board type is yunvoice_cpu0_evb
+
+config BOARD_YUNVOICE_CPU1_EVB
+     depends on CHIP_YUNVOICE_CPU1
+     bool "yunvoice cpu1 evb"
+     help
+       select the board type is yunvoice_cpu1_evb
+endchoice
+
+choice
+    prompt "board select"
+    depends on CHIP_PANGU
+    help:
+      select the board
+
+config BOARD_PANGU_CPU0_804_FPGA
+    depends on CHIP_PANGU_CPU0
+    bool "pangu cpu0 ck804ef fpga"
+    help
+       select the board type is pangu_cpu0_fpga
+
+config BOARD_PANGU_CPU1_804_FPGA
+     depends on CHIP_PANGU_CPU1
+     bool "pangu cpu1 ck804ef fpga"
+     help
+       select the board type is pangu_cpu1_fpga
+
+config BOARD_PANGU_CPU2_805_FPGA
+     depends on CHIP_PANGU_CPU2
+     bool "pangu cpu2 ck805 fpga"
+     help
+       select the board type is pangu_cpu2_fpga
+
+config BOARD_PANGU_CPU0_EVB
+     depends on CHIP_PANGU_CPU0
+     bool "pangu cpu0 ck804ef evb"
+     help
+       select the board type is pangu_cpu0_evb
+
+config BOARD_PANGU_CPU1_EVB
+     depends on CHIP_PANGU_CPU1
+     bool "pangu cpu1 ck804ef evb"
+     help
+       select the board type is pangu_cpu1_evb
+
+config BOARD_PANGU_CPU2_EVB
+     depends on CHIP_PANGU_CPU2
+     bool "pangu cpu2 ck805 evb"
+     help
+       select the board type is pangu_cpu2_evb
+
+endchoice
+
+choice
+     prompt "board select"
+     depends on CHIP_SMARTH_610
+     help
+       select the board
+
+config BOARD_SMARTH_610_EVB
+     bool "smarth610 evb"
+     help
+       select the board type is smarth_evb
+endchoice
+
+choice
+     prompt "board select"
+     depends on CHIP_SMARTH_610M
+     help
+       select the board
+
+config BOARD_SMARTH_610M_EVB
+     bool "smarth610m evb"
+     help
+       select the board type is smarth_evb
+endchoice
+
+choice
+     prompt "board select"
+     depends on CHIP_SMARTH_MMU
+     help
+       select the board
+
+config BOARD_SMARTH_807_EVB
+     bool "smarth807 evb"
+     depends on CPU_C807 || CPU_C807F || CPU_C807FV
+     help
+       select the board type is smarth_evb
+
+config BOARD_SMARTH_810_EVB
+     bool "smarth810 evb"
+     depends on CPU_C810 || CPU_C810T || CPU_C810V || CPU_C810TV
+     help
+       select the board type is smarth_evb
+endchoice
+
+choice
+     prompt "board select"
+     depends on CHIP_SMARTH_NOMMU
+     help
+       select the board
+
+config BOARD_SMARTH_R807_EVB
+     bool "smarth r807 evb"
+     depends on CPU_R807 || CPU_R807F
+     help
+       select the board type is smarth_r807_evb
+endchoice
+
+choice
+     prompt "board select"
+     depends on CHIP_ERAGON2_R807
+     help
+       select the board
+
+config BOARD_ERAGON2_R807_FPGA
+     bool "eragon2_r807 fpga"
+     help
+       select the board type is eragon2_r807_fpga
+endchoice
+
+choice
+     prompt "board select"
+     depends on CHIP_ERAGON3
+     help
+       select the board
+
+config BOARD_ERAGON3_EVB
+     bool "eragon3 evb"
+     help
+       select the board type is eragon3_evb
+endchoice
+
+choice
+     prompt "board select"
+     depends on CHIP_SMARTL_RV32
+     help
+       select the board
+
+config BOARD_SMARTL_E902_EVB
+     bool "smartl e902 evb"
+     help
+       select the board type is smartl e902 evb
+
+config BOARD_SMARTL_E906_EVB
+        bool "smartl e906 evb"
+        help
+          select the board type is smartl e906 evb
+
+endchoice
+
+choice
+     prompt "board select"
+     depends on CHIP_TX216
+     help
+       select the board
+
+config BOARD_TX216_CPU0_FPGA
+     depends on CHIP_TX216_CPU0
+     bool "tx216_ck804ef_fpga"
+     help
+       select the board type is tx216_cpu0_fpga
+
+config BOARD_TX216_CPU1_FPGA
+     depends on CHIP_TX216_CPU1
+     bool "tx216_ck805f_fpga"
+     help
+       select the board type is tx216_cpu1_fpga
+
+config BOARD_TX216_CPU0_EVB
+        depends on CHIP_TX216_CPU0
+        bool "tx216_ck804ef_evb"
+        help
+          select the board type is tx216_cpu0_evb
+
+config BOARD_TX216_CPU1_EVB
+        depends on CHIP_TX216_CPU1
+        bool "tx216_ck805f_evb"
+        help
+          select the board type is tx216_cpu1_evb
+
+endchoice
+
+choice
+     prompt "board select"
+     depends on CHIP_CETUS
+     help
+       select the board
+
+config BOARD_CETUS_FPGA
+     bool "cetus_fpga"
+     help
+       select the board type is cetus_fpga
+
+config BOARD_CETUS_EVB
+     bool "cetus_evb"
+     help
+       select the board type is cetus_evb
+endchoice
+
+choice
+     prompt "board select"
+     depends on CHIP_LN8819_CPU0
+     help
+       select the board
+
+config BOARD_LN8819_CPU0_FPGA
+     bool "ln8819_cpu0_fpga"
+     help
+       select the board type is ln8819_cpu0_fpga
+
+config BOARD_LN8819_CPU0_EVB
+     bool "ln8819_cpu0_evb"
+     help
+       select the board type is ln8819_cpu0_evb
+endchoice
+
+choice
+     prompt "board select"
+     depends on CHIP_LN8819_CPU1
+     help
+       select the board
+
+config BOARD_LN8819_CPU1_FPGA
+     bool "ln8819_cpu1_fpga"
+     help
+       select the board type is ln8819_cpu1_fpga
+
+config BOARD_LN8819_CPU1_EVB
+     bool "ln8819_cpu1_evb"
+     help
+       select the board type is ln8819_cpu1_evb
+endchoice
+
+choice
+     prompt "board select"
+     depends on CHIP_ARIES_AP
+     help
+       select the board
+
+config BOARD_ARIES_AP_FPGA
+     bool "aries_ap_fpga"
+     help
+       select the board type is aries_ap_fpga
+endchoice
+
+choice
+     prompt "board select"
+     depends on CHIP_ARIES_SE
+     help
+       select the board
+
+config BOARD_ARIES_SE_FPGA
+     bool "aries_se_fpga"
+     help
+       select the board type is aries_se_fpga
+endchoice
+
+choice
+     prompt "board select"
+     depends on CHIP_DUBHE
+     help
+       select the board
+
+config BOARD_DUBHE_EVB
+     bool "dubhe_evb"
+     help
+       select the board type is dubhe_evb
+
+config BOARD_DUBHE_FPGA
+     bool "dubhe_fpga"
+     help
+       select the board type is dubhe_fpga
+endchoice
+
+choice
+     prompt "board select"
+     depends on CHIP_MERAK
+     help
+       select the board
+
+config BOARD_MERAK_EVB
+     bool "merak_evb"
+     help
+       select the board type is merak_evb
+
+config BOARD_MERAK_FPGA
+     bool "merak_fpga"
+     help
+       select the board type is merak_fpga
+endchoice
+
+choice
+     prompt "board select"
+     depends on CHIP_MIZAR
+     help
+       select the board
+
+config BOARD_MIZAR_EVB
+     bool "mizar_evb"
+     help
+       select the board type is mizar_evb
+
+config BOARD_MIZAR_FPGA
+     bool "mizar_fpga"
+     help
+       select the board type is mizar_fpga
+endchoice
+
+choice
+     prompt "board select"
+     depends on CHIP_ALKAID
+     help
+       select the board
+
+config BOARD_ALKAID_EVB
+     bool "alkaid_evb"
+     help
+       select the board type is alkaid_evb
+
+config BOARD_ALKAID_EB043A10
+     bool "alkaid_eb043a10"
+     help
+       select the board type is alkaid_eb043a10
+
+config BOARD_ALKAID_FPGA
+     bool "alkaid_fpga"
+     help
+       select the board type is alkaid_fpga
+endchoice
+
+choice
+     prompt "board select"
+     depends on CHIP_SIMULATE
+     help
+       select the board 
+
+config BOARD_SIMULATE_EVB
+     bool "simulate_evb"
+     help
+       select the board type is simulate_evb
+endchoice
+
+config BOARD_NAME_STR
+    string
+    default "phobos_evb"                if BOARD_PHOBOS_EVB
+    default "smartl_80x_evb"            if BOARD_SMARTL_801_EVB
+    default "smartl_80x_evb"            if BOARD_SMARTL_802_EVB
+    default "smartl_80x_evb"              if BOARD_SMARTL_803_EVB
+    default "smartl_80x_evb"              if BOARD_SMARTL_804_EVB
+    default "smartl_80x_evb"              if BOARD_SMARTL_805_EVB
+    default "smartl_e902_evb"           if BOARD_SMARTL_E902_EVB
+    default "smartl_e906_evb"           if BOARD_SMARTL_E906_EVB
+    default "cb2301"                    if BOARD_CB2301
+    default "ch6101_cpu1_fpga"          if BOARD_CH6101_CPU1_FPGA
+    default "ch6101_cpu0_fpga"          if BOARD_CH6101_CPU0_FPGA
+    default "ch6101_cpu1_evb"           if BOARD_CH6101_CPU1_EVB
+    default "ch6101_cpu0_evb"           if BOARD_CH6101_CPU0_EVB
+    default "danica_evb"                if BOARD_DANICA_EVB
+    default "danica_fpga"               if BOARD_DANICA_FPGA
+    default "hobbit3_se_evb"            if BOARD_HOBBIT3_SE_EVB
+    default "hobbit4_evb"               if BOARD_HOBBIT4_EVB
+    default "light_aon"                 if BOARD_LIGHT_AON
+    default "light_beagle"              if BOARD_LIGHT_BEAGLE
+    default "light_aon_a_ref"           if BOARD_LIGHT_AON_A_REF
+    default "light_aon_a"               if BOARD_LIGHT_AON_A
+    default "light_aon"               if BOARD_LIGHT_AON_B
+    default "light_aon_b_ref"           if BOARD_LIGHT_AON_B_REF
+    default "light_aon_ant_discrete"    if BOARD_LIGHT_AON_ANT_DISCRETE
+    default "light_aon_ant_evt"         if BOARD_LIGHT_AON_ANT_EVT
+    default "light_aon"				          if BOARD_LIGHT_LPI4A
+    default "avfs_fpga"                 if BOARD_AVFS_FPGA
+    default "jupiter_e906fd_bc_fpga"    if BOARD_JUPITER_E906FD_BC_FPGA
+    default "jupiter_e906fd_lc_fpga"    if BOARD_JUPITER_E906FD_LC_FPGA
+    default "jupiter_e906fd_bc_mpw_1"   if BOARD_JUPITER_E906FD_BC_MPW_1
+    default "jupiter_e906fd_lc_mpw_1"   if BOARD_JUPITER_E906FD_LC_MPW_1
+    default "jupiter_e906fd_bc_mpw_2_fpga"    if BOARD_JUPITER_E906FD_BC_MPW_2_FPGA
+    default "jupiter_e906fd_lc_mpw_2_fpga"    if BOARD_JUPITER_E906FD_LC_MPW_2_FPGA
+    default "sparrow_c906_fpga"         if BOARD_SPARROW_C906_FPGA
+    default "light_c910_fpga"           if BOARD_LIGHT_C910_FPGA
+    default "light_c910_fm_fpga"        if BOARD_LIGHT_C910_FM_FPGA
+    default "cb2201"                    if BOARD_CB2201
+    default "smarth_610_evb"            if BOARD_SMARTH_610_EVB
+    default "smarth_610m_evb"           if BOARD_SMARTH_610M_EVB
+    default "smarth_807_evb"            if BOARD_SMARTH_807_EVB
+    default "smarth_r807_evb"           if BOARD_SMARTH_R807_EVB
+    default "smarth_810_evb"            if BOARD_SMARTH_810_EVB
+    default "eragon2_r807_fpga"         if BOARD_ERAGON2_R807_FPGA
+    default "eragon3_evb"               if BOARD_ERAGON3_EVB
+    default "fangtang_cpu0_evb"         if BOARD_FANGTANG_CPU0_EVB
+    default "fangtang_cpu1_evb"         if BOARD_FANGTANG_CPU1_EVB
+    default "yunvoice_cpu0_evb"         if BOARD_YUNVOICE_CPU0_EVB
+    default "yunvoice_cpu1_evb"         if BOARD_YUNVOICE_CPU1_EVB
+    default "pangu_cpu2_805_fpga"       if BOARD_PANGU_CPU2_805_FPGA
+    default "pangu_cpu1_804_fpga"       if BOARD_PANGU_CPU1_804_FPGA
+    default "pangu_cpu0_804_fpga"       if BOARD_PANGU_CPU0_804_FPGA
+    default "pangu_cpu2_evb"            if BOARD_PANGU_CPU2_EVB
+    default "pangu_cpu1_evb"            if BOARD_PANGU_CPU1_EVB
+    default "pangu_cpu0_evb"            if BOARD_PANGU_CPU0_EVB
+    default "tx216_cpu0_804_fpga"       if BOARD_TX216_CPU0_FPGA
+    default "tx216_cpu1_805_fpga"       if BOARD_TX216_CPU1_FPGA
+    default "tx216_cpu0_804_evb"        if BOARD_TX216_CPU0_EVB
+    default "tx216_cpu1_805_evb"        if BOARD_TX216_CPU1_EVB
+    default "cetus_fpga"                if BOARD_CETUS_FPGA
+    default "cetus_evb"                 if BOARD_CETUS_EVB
+    default "ln8819_cpu0_fpga"          if BOARD_LN8819_CPU0_FPGA
+    default "ln8819_cpu0_evb"           if BOARD_LN8819_CPU0_EVB
+    default "ln8819_cpu1_fpga"          if BOARD_LN8819_CPU1_FPGA
+    default "ln8819_cpu1_evb"           if BOARD_LN8819_CPU1_EVB
+    default "aries_ap_fpga"             if BOARD_ARIES_AP_FPGA
+    default "aries_se_fpga"             if BOARD_ARIES_SE_FPGA
+    default "wujian100_open_evb"        if BOARD_WUJIAN100_OPEN_EVB
+    default "dubhe_fpga"                if BOARD_DUBHE_FPGA
+    default "merak_fpga"                if BOARD_MERAK_FPGA
+    default "mizar_fpga"                if BOARD_MIZAR_FPGA
+    default "alkaid_fpga"               if BOARD_ALKAID_FPGA
+    default "simulate_evb"              if BOARD_SIMULATE_EVB
+    default "dubhe_evb"                 if BOARD_DUBHE_EVB
+    default "merak_evb"                 if BOARD_MERAK_EVB
+    default "mizar_evb"                 if BOARD_MIZAR_EVB
+    default "alkaid_evb"                if BOARD_ALKAID_EVB
+    default "alkaid_eb043a10"           if BOARD_ALKAID_EB043A10

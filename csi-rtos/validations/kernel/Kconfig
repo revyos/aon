@@ -1,0 +1,74 @@
+#menu "choose kernel cases"
+
+choice
+       prompt "select"
+       help
+         select the kernel validation
+
+config BUILD_VAL_TASK
+       bool "test kernel task"
+       help
+          select the kernel task test
+
+if BUILD_VAL_TASK
+source "validations/kernel/task/Kconfig"
+endif
+
+config BUILD_VAL_SEM
+       bool "test kernel semaphore"
+       help
+          select the kernel semaphore test
+
+if BUILD_VAL_SEM
+source "validations/kernel/sem/Kconfig"
+endif
+
+config BUILD_VAL_MSGQ
+       bool "test kernel message queue"
+       help
+          select the kernel message queue test
+
+if BUILD_VAL_MSGQ
+source "validations/kernel/msgq/Kconfig"
+endif
+
+config BUILD_VAL_MUTEX
+       bool "test kernel mutex"
+       help
+          select the kernel mutex test
+
+if BUILD_VAL_MUTEX
+source "validations/kernel/mutex/Kconfig"
+endif
+
+config BUILD_VAL_EVENT
+       bool "test kernel event"
+       help
+          select the kernel event test
+
+if BUILD_VAL_EVENT
+source "validations/kernel/event/Kconfig"
+endif
+
+config BUILD_VAL_SOFT_TIMER
+       bool "test kernel soft timer"
+       help
+          select the kernel soft timer test
+
+if BUILD_VAL_SOFT_TIMER
+source "validations/kernel/soft_timer/Kconfig"
+endif
+
+config BUILD_VAL_MEMPOOL
+       bool "test kernel memory pool"
+       depends on !KERNEL_FREERTOS
+       help
+          select the kernel memory pool test
+
+if BUILD_VAL_MEMPOOL
+source "validations/kernel/mempool/Kconfig"
+endif
+
+endchoice
+
+#endmenu

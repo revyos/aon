@@ -1,0 +1,20 @@
+choice
+       prompt "select"
+       depends on BUILD_VAL_I2S
+       default BUILD_VAL_I2S01
+       help
+         select the test module
+
+config BUILD_VAL_I2S01
+       bool "build validation i2s01"
+       depends on BUILD_VAL_I2S
+       help
+         select the i2s driver validation
+
+
+config BUILD_VAL_I2S02
+       bool "build validation i2s02"
+       depends on BUILD_VAL_I2S
+       help
+         select the i2s driver validation
+endchoice

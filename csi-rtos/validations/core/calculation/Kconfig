@@ -1,0 +1,14 @@
+choice
+       prompt "select"
+       depends on BUILD_VAL_CALCULATION
+       default BUILD_VAL_CALCULATION01
+       help
+         select the test module
+
+config BUILD_VAL_CALCULATION01
+       bool "build validation calculation01"
+       depends on BUILD_VAL_CALCULATION
+       help
+         select the calculation test
+
+endchoice

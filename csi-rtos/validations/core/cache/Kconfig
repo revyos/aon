@@ -1,0 +1,20 @@
+choice
+       prompt "select"
+       depends on BUILD_VAL_CACHE
+       default BUILD_VAL_CACHE_PROFILE
+       help
+         select the test module
+
+config BUILD_VAL_DCACHE_BASIC
+       bool "build validation dcache basic"
+       depends on BUILD_VAL_CACHE
+       help
+         select the dcache basic test
+
+config BUILD_VAL_CACHE_PROFILE
+       bool "build validation cache profile"
+       depends on BUILD_VAL_CACHE
+       help
+         select the cache profile test
+
+endchoice

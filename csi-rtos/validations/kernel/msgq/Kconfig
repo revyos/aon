@@ -1,0 +1,21 @@
+choice
+       prompt "select"
+       depends on BUILD_VAL_MSGQ
+       default BUILD_VAL_MSGQ01
+       help
+         select the test module
+
+config BUILD_VAL_MSGQ01
+       bool "build validation msgq01"
+       depends on BUILD_VAL_MSGQ
+       help
+         select the msgq test
+
+config BUILD_VAL_MSGQ02
+       bool "build validation msgq02"
+       depends on BUILD_VAL_MSGQ
+	   help
+       select the msgq test
+
+
+endchoice

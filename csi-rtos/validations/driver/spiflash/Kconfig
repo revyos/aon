@@ -1,0 +1,19 @@
+choice
+       prompt "select"
+       depends on BUILD_VAL_SPIFLASH
+       default BUILD_VAL_SPIFLASH01
+       help
+         select the test module
+
+config BUILD_VAL_SPIFLASH01
+       bool "build validation spiflash01"
+       depends on BUILD_VAL_SPIFLASH
+       help
+         select the spiflash driver validation
+
+config BUILD_VAL_SPIFLASH02
+       bool "build validation spiflash02"
+       depends on BUILD_VAL_SPIFLASH
+       help
+         select the spiflash driver validation
+endchoice

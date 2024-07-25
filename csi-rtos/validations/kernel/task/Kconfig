@@ -1,0 +1,20 @@
+choice
+       prompt "select"
+       depends on BUILD_VAL_TASK
+       default BUILD_VAL_TASK01
+       help
+         select the test module
+
+config BUILD_VAL_TASK01
+       bool "build validation task01"
+       depends on BUILD_VAL_TASK
+       help
+         select the task test
+
+config BUILD_VAL_TASK02
+       bool "build validation task02"
+       depends on BUILD_VAL_TASK
+       help
+         select the task test
+endchoice
+

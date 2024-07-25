@@ -1,0 +1,3 @@
+[submodule "csi"]
+    path = csi
+    url = git@gitlab.alibaba-inc.com:thead/csi.git
