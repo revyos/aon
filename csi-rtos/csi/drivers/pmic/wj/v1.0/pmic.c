@@ -34,7 +34,7 @@ typedef enum {
 
 csi_pmic_dev_t pmic_devs[CONFIG_MAX_PMIC_NUM];
 
-static csi_gpio_t pmic_csi_gpio;
+csi_gpio_t pmic_csi_gpio;
 
 #ifdef CONFIG_PMIC_DA9063_V1
 extern struct csi_pmic_drv_data da9063_drv;
@@ -718,6 +718,39 @@ csi_error_t csi_pmic_read_temperature(csi_pmic_t *pmic, uint32_t *temp)
         return ret;
 }
 
+csi_error_t csi_pmic_mode_select(csi_pmic_t *pmic, uint8_t regu_ext_id, pmic_buck_mode mode)
+{
+        CSI_PARAM_CHK(pmic, CSI_ERROR);
+	csi_error_t		ret = CSI_OK;
+        csi_regu_id_t  *regu_id = NULL;
+        csi_pmic_dev_t *pmic_dev = NULL;
+
+        ret = pmic_get_id_info(pmic, regu_ext_id, &regu_id);
+        if (ret) {
+                return CSI_ERROR;
+        }
+        for (int i = 0; i < ARRAY_SIZE(regu_id->sub.id); i++) {
+		if (regu_id->sub.id[i].pmic_id != PMIC_ID_INVALID) {
+		   	pmic_dev = csi_pmic_get_dev_by_pmic_id(pmic, regu_id->sub.id[i].pmic_id);
+	        	if (!pmic_dev) {
+			    return CSI_ERROR;
+	        	}
+
+			if (!pmic_dev->drv_data->ops->mode_select) {
+			    LOG_E("pmic_id %d not support mode selection\n", regu_id->sub.id[i].pmic_id);
+			    return CSI_UNSUPPORTED;
+			}
+			ret = pmic_dev->drv_data->ops->mode_select(pmic, pmic_dev, regu_id->sub.id[i].hw_id, mode);
+			if(ret)
+			{
+			    LOG_E("pmic_id %d mode selection error\n", regu_id->sub.id[i].pmic_id);
+			    return ret;
+			}
+    	}
+	}
+	return ret;
+}
+
 csi_error_t csi_pmic_regulator_is_enable(csi_pmic_t *pmic, uint8_t regu_ext_id,
                                          uint32_t *benable)
 {
@@ -1049,7 +1082,7 @@ static void gpio_interrupt_handler(csi_gpio_t *gpio, uint32_t pins, void *arg)
 
 UNKNOW_PINS:
 
-        LOG_E("unexpected gpio-interrupt-pins pins:0x%x\n", pins);
+        //LOG_E("unexpected gpio-interrupt-pins pins:0x%x\n", pins);
         return;
 }
 
@@ -1170,9 +1203,6 @@ static int pmic_parent_ctrl(csi_pmic_t *pmic, pmic_dev_info_t *dev, bool enable)
                                                 LOG_E("Pmic hw ctrl faild %d\n", ret);
                                                 return ret;
                                         }
-                              
-        
-        
     } else {
        LOG_E("Unsupport parent pmic ctrl mode %d\n", dev->ctrl_info.pmic_ctrl_type);
        return CSI_ERROR;
@@ -1223,7 +1253,6 @@ csi_error_t pmic_register_device(csi_pmic_t *pmic, int dev_num,
                                 return CSI_ERROR;
                         }
                 }
-
                 if (dev_list[i].flag & PMIC_DEV_ENABLE_ERR_IO) {
                         ret = light_pin_irq_cfg(
                             &pmic_csi_gpio, dev_list[i].err_io_info.gpio_port,
@@ -1247,7 +1276,6 @@ csi_error_t pmic_register_device(csi_pmic_t *pmic, int dev_num,
                         }
                         has_interrupt_pin = 1;
                 }
-
                       ret = pmic_parent_ctrl_init(pmic, &pmic_csi_gpio, &dev_list[i]);
                       if(ret) {
                              LOG_E("pmic parent ctrl init faild %d\n", ret);
@@ -1257,12 +1285,11 @@ csi_error_t pmic_register_device(csi_pmic_t *pmic, int dev_num,
                 pmic_devs[i].drv_data = drv_info->drv_data;
                 pmic_devs[i].dev_info = &dev_list[i];
         }
-
         for (int i = 0; i < dev_num; i++) {
                 ret = pmic_parent_ctrl(pmic, &pmic_devs[i], 1);
                 if(ret) {
                       LOG_E("pmic parent ctrl on faild %d\n", ret);
-                      return CSI_ERROR;     
+                      return CSI_ERROR;
                 }
                 if (pmic_devs[i].drv_data->ops->init) {
                         ret = pmic_devs[i].drv_data->ops->init(pmic,
@@ -1289,7 +1316,6 @@ csi_error_t pmic_register_device(csi_pmic_t *pmic, int dev_num,
 
         pmic->dev_num  = dev_num;
         pmic->dev_list = pmic_devs;
-
         if (has_interrupt_pin) {
                 ret = csi_gpio_attach_callback(&pmic_csi_gpio,
                                                gpio_interrupt_handler, pmic);
@@ -1298,7 +1324,6 @@ csi_error_t pmic_register_device(csi_pmic_t *pmic, int dev_num,
                         return CSI_ERROR;
                 }
         }
-
         return CSI_OK;
 }
 
@@ -1594,7 +1619,7 @@ csi_error_t csi_pmic_soft_power_off(csi_pmic_t *pmic)
                 ret = pmic_parent_ctrl(pmic, dev, 0);
                 if(ret) {
                       LOG_E("pmic parent ctrl off faild %d\n", ret);
-                      return CSI_ERROR;     
+                      return CSI_ERROR;
                 }
                 dev->pmic_dev_status.dev_status = CSI_STATUS_PMIC_DEV_NOT_INIT;
         }

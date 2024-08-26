@@ -14,6 +14,14 @@
 #include "rtc_alg.h"
 #include "wj_rtc_ll.h"
 
+void csi_rtc_intr_clr(csi_rtc_t *rtc)
+{
+    wj_rtc_regs_t *rtc_base = (wj_rtc_regs_t *)HANDLE_REG_BASE(rtc);
+
+    if (wj_rtc_get_intr_sta(rtc_base))
+	wj_rtc_clear_intr_sta(rtc_base);
+
+}
 
 /**
   \brief       Internal timeout interrupt process function
@@ -23,15 +31,11 @@
 void wj_rtc_irq_handler(void *arg)
 {
     csi_rtc_t *rtc = (csi_rtc_t *)arg;
-    wj_rtc_regs_t *rtc_base = (wj_rtc_regs_t *)HANDLE_REG_BASE(rtc);
 
-    if (wj_rtc_get_intr_sta(rtc_base)) {
-        wj_rtc_clear_intr_sta(rtc_base);
-
+    csi_rtc_intr_clr(rtc);
         if (rtc->callback) {
             rtc->callback(rtc, rtc->arg);
         }
-    }
 }
 /**
   \brief       Initialize RTC Interface. Initializes the resources needed for the RTC interface

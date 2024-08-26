@@ -33,7 +33,7 @@ static void wj_mbox_irq_handler(void *arg)
                 /*clear chan irq bit in STA register*/
                 wj_mbox_rmw(priv, TH1520_MBOX_CLR,BIT(i),0);
 
-                if (i == TH1520_MBOX_ICU_CPU1)
+                if (i >= TH1520_MBOX_ICU_CPU1)
                    id_map = i + 1;
 		else
                    id_map = i;
@@ -182,7 +182,10 @@ int32_t csi_mbox_receive(csi_mbox_t *mbox, uint32_t channel_id, void *data, uint
 
     /*notify remote cpu*/
     wj_mbox_chan_wr_ack(priv,channel_id,&ack_magic,true);
-    wj_mbox_chan_rmw(priv,channel_id,TH1520_MBOX_GEN,TH1520_MBOX_GEN_TX_ACK,0,true);
+    /*910R channel no need to ack, it only uesed in opensbi and tee*/
+    if(channel_id != TH1520_MBOX_ICU_CPU3) {
+        wj_mbox_chan_rmw(priv,channel_id,TH1520_MBOX_GEN,TH1520_MBOX_GEN_TX_ACK,0,true);
+    }
 
     return 0;
 }

@@ -7,14 +7,15 @@
 #include "sysclk.h"
 #include "drv/timer.h"
 #include "aon_wdt.h"
+#include "drv/rtc.h"
 
-extern int start_timer(uint32_t timeout_s);
-extern int rtc_alarm();
 extern uint32_t soc_irq_get_irq_num(void);
 extern void soc_irq_disable(uint32_t irq_num);
 extern void soc_irq_enable(uint32_t irq_num);
 extern void board_resume();
 extern aon_wdt_t g_aon_wdt;
+extern csi_rtc_t rtc;
+extern csi_gpio_t pmic_csi_gpio;
 int32_t enabled_irq_num[32];
 
 extern void audio_sys_clk_enable(bool en);
@@ -110,7 +111,7 @@ clk_match_list_t clk_list [] = {
     {"ISP_RY", VISYS_ISP_RY},
 };
 
-const regu_voltage_param_t apsys_soc_ext_id[] = {
+const regu_voltage_param_t apsys_soc_poweroff_id[] = {
 	APSYS_SOC_EXT_ID_DEF(SOC_DVDD18_EMMC),
 	APSYS_SOC_EXT_ID_DEF(SOC_DVDD33_EMMC),
 	APSYS_SOC_EXT_ID_DEF(SOC_AVDD18_MIPI_HDMI),
@@ -119,6 +120,15 @@ const regu_voltage_param_t apsys_soc_ext_id[] = {
 	APSYS_SOC_EXT_ID_DEF(SOC_DVDD18_AP),
 	APSYS_SOC_EXT_ID_DEF(SOC_VDD_DDR_0V6),
 	APSYS_SOC_EXT_ID_DEF(SOC_APCPU_DVDD_DVDDM),
+};
+
+const regu_voltage_param_t apsys_soc_lowpower_id[] = {
+	APSYS_SOC_EXT_ID_DEF(SOC_VDD_DDR_1V1),
+	APSYS_SOC_EXT_ID_DEF(SOC_DVDD08_DDR),
+	APSYS_SOC_EXT_ID_DEF(SOC_VDD_DDR_1V8),
+	APSYS_SOC_EXT_ID_DEF(SOC_DVDD18_AON),
+	APSYS_SOC_EXT_ID_DEF(SOC_AVDD33_USB3),
+	APSYS_SOC_EXT_ID_DEF(SOC_DVDD08_AON),
 };
 
 uint32_t g_chip_wakeup_flag = 0;
@@ -639,7 +649,7 @@ void c910_powerup(uint16_t cpuid)
 		subsys_powerdown_iso_en_clr(subsys);
 		c910_sys_clk_enable(true, cpuid);
 		/* leave this pull-up in opensbi */
-	//	c910_reset_release(cpuid);
+		c910_reset_release(cpuid);
 }
 
 void c910_powerdown(uint16_t cpuid)
@@ -660,7 +670,7 @@ void c910_powerdown(uint16_t cpuid)
 		LOG_I("invalid c910 cpu id\n");
 		return;
 	}
-	LOG_I("reset core %d\n", cpuid);
+	LOG_D("reset core %d\n", cpuid);
 	c910_reset(cpuid);
 	c910_sys_clk_enable(false, cpuid);
 	subsys_powerdown_iso_en_set(subsys);
@@ -913,13 +923,15 @@ static inline void ap_power_down()
 
 csi_error_t apsys_power_ctrl(csi_pmic_t* pmic, bool ena)
 {
+        CSI_PARAM_CHK(pmic, CSI_ERROR);
 	csi_error_t ret = CSI_OK;
-	uint32_t soc_id_num = sizeof(apsys_soc_ext_id) / sizeof(apsys_soc_ext_id[0]);
+
+	uint32_t soc_id_num = sizeof(apsys_soc_poweroff_id) / sizeof(apsys_soc_poweroff_id[0]);
 	for (uint32_t soc_id = 0; soc_id < soc_id_num; soc_id++) {
 		if (ena)
 		{
 			/* AP sys power enable/disable sequence should be reversed */
-			ret = csi_pmic_regulator_ctrl(pmic, apsys_soc_ext_id[soc_id_num - soc_id - 1].regu_ext_id, 1);
+			ret = csi_pmic_regulator_ctrl(pmic, apsys_soc_poweroff_id[soc_id_num - soc_id - 1].regu_ext_id, 1);
 			mdelay(2);
 			LOG_I("enable %d, ret %d\n", soc_id, ret);
 			if (ret)
@@ -927,7 +939,7 @@ csi_error_t apsys_power_ctrl(csi_pmic_t* pmic, bool ena)
 		}
 		else
 		{
-			ret = csi_pmic_regulator_ctrl(pmic, apsys_soc_ext_id[soc_id].regu_ext_id, 0);
+			ret = csi_pmic_regulator_ctrl(pmic, apsys_soc_poweroff_id[soc_id].regu_ext_id, 0);
 			mdelay(2);
 			LOG_I("disable %d, ret %d\n", soc_id, ret);
 			if (ret)
@@ -936,6 +948,23 @@ csi_error_t apsys_power_ctrl(csi_pmic_t* pmic, bool ena)
 	}
 	return CSI_OK;
 }
+
+csi_error_t apsys_lowpower_ctrl(csi_pmic_t* pmic, pmic_buck_mode mode)
+{
+        CSI_PARAM_CHK(pmic, CSI_ERROR);
+	csi_error_t ret = CSI_OK;
+
+	uint32_t soc_id_num = sizeof(apsys_soc_lowpower_id) / sizeof(apsys_soc_lowpower_id[0]);
+	for (uint32_t soc_id = 0; soc_id < soc_id_num; soc_id++) {
+			/* AP sys power enable/disable sequence should be reversed */
+			ret = csi_pmic_mode_select(pmic, apsys_soc_lowpower_id[soc_id].regu_ext_id, mode);
+			LOG_D("soc_id %d enter %d mode, ret %d\n", soc_id, mode, ret);
+			if (ret == CSI_ERROR)
+				return ret;
+	}
+	return CSI_OK;
+}
+
 static void ap_power_up()
 {
 	uint32_t data = CHIP_REG_GET(REG_AON_APSYS_CLK_GATE);
@@ -1297,7 +1326,7 @@ static void aonsys_wakeup_source_set(uint32_t wakeup_flag)
 	}
 }
 
-static void aonsys_wakeup_source_clr()
+static void aonsys_wakeup_source_clr(wakeup_flag)
 {
 	//uint32_t data = CHIP_REG_GET(AON_PMU_PMU_INT_CLR_CFG);
 	int32_t irq, j;
@@ -1309,6 +1338,11 @@ static void aonsys_wakeup_source_clr()
 	//CHIP_REG_SET(0, AON_PMU_GPIO_INT_MASK_CFG);
 	//CHIP_REG_SET(0, AON_PMU_INTC_INT_MASK_CFG_L);
 	//CHIP_REG_SET(0, AON_PMU_INTC_INT_MASK_CFG_H);
+	if(wakeup_flag & AON_WAKEUP_BY_RTC)
+		csi_rtc_intr_clr(&rtc);
+	if(wakeup_flag & AON_WAKEUP_BY_GPIO)
+		csi_gpio_intr_clr(&pmic_csi_gpio);
+
 	csi_irq_disable(WJ_CPR_IRQn);
 	csi_irq_disable(WJ_RTC_IRQn);
 	csi_irq_disable(DW_GPIO_IRQn);
@@ -1347,13 +1381,13 @@ void chip_lpm_resume(csi_pmic_t* pmic, uint32_t chip_lp_mode)
 	if (chip_lp_mode == CHIP_LP_STANDBY) {
 
 		//7.a, 7b, 7.c
-		aonsys_wakeup_source_clr();
+		aonsys_wakeup_source_clr(g_chip_wakeup_flag);
 
-		// powerdown secondary core
- 		for(int cpu = 1; cpu < MAX_C910_CORE_NUM; cpu++)
- 			c910_powerup(cpu);
  		//7.d , 7.e
  		system_clk_switch(PLL_NORMAL, SYS_LP_STANDBY);
+
+		// ddr exit lowpower mode
+		apsys_lowpower_ctrl(pmic, SYNC);
 
  		// 8.a
  		aon_mem_retention_exit(MEM_RET_DSLP);
@@ -1448,9 +1482,6 @@ uint32_t chip_lpm_suspend(csi_pmic_t* pmic)
 				)
 				break;
 		} while (1);
-		// powerdown secondary core
-		for(int cpu = 1; cpu < MAX_C910_CORE_NUM; cpu++)
-			c910_powerdown(cpu);
 
 		//FIXME: DISABLE C910 Debug Mode？
 		//4.b
@@ -1504,6 +1535,7 @@ uint32_t chip_lpm_suspend(csi_pmic_t* pmic)
 		pvtc_reset();
 
 		//5.i
+		apsys_lowpower_ctrl(pmic, SLEEP);
 		apsys_power_ctrl(pmic, false);
 
 		//5.j

@@ -127,6 +127,15 @@ csi_error_t csi_rtc_enable_pm(csi_rtc_t *rtc);
 */
 void csi_rtc_disable_pm(csi_rtc_t *rtc);
 
+
+/**
+  \brief       Clear RTC intrrupt STAT
+  \param[in]   rtc    Handle to operate
+  \return      None
+*/
+void csi_rtc_intr_clr(csi_rtc_t *rtc);
+
+
 #ifdef __cplusplus
 }
 #endif

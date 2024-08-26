@@ -113,6 +113,12 @@ typedef enum {
    PMIC_CTRL_BY_NOTHINTG  = 0xFF,
 } pmic_ctrl_info_en;
 
+typedef enum _PMIC_BUCK_STATE {
+	SYNC = 0U,
+	SLEEP,
+	AUTO,
+} pmic_buck_mode;
+
 typedef struct __packed {
     uint8_t gpio_port;
 	uint8_t pin;
@@ -177,6 +183,8 @@ typedef struct {
 	csi_error_t (*get_temperature)(csi_pmic_t *pmic,csi_pmic_dev_t *pmic_dev, uint32_t* val);
 	/* read pmic faults */
 	csi_error_t (*read_faults)(csi_pmic_t *pmic, csi_pmic_dev_t *pmic_dev);
+	/* select pmic output mode */
+	csi_error_t (*mode_select)(csi_pmic_t *pmic, csi_pmic_dev_t *pmic_dev, uint32_t regu_id, pmic_buck_mode mode);
 	/* get pmic chip id */
 	csi_error_t (*read_id)(csi_pmic_t *pmic, csi_pmic_dev_t *pmic_dev);
 	/* set pmic log level */
@@ -218,6 +226,7 @@ typedef struct __packed {
 	uint8_t   initial_benable;				 ///< whether regulator is enabled
 	uint32_t    vreg;                        ///< voltage setting register of regulator
 	uint32_t   vmask;                       ///< voltage setting mask of regulator
+	uint32_t   vconf;						///< voltage configuration
 	uint32_t   n_voltages;                  ///< number of selectors avaliable for list voltage
     const unsigned int *volt_table;         ///< voltage mapping table(if table based mapping)
 	uint32_t   ereg;                        ///< regiater for control
@@ -468,6 +477,14 @@ csi_error_t csi_pmic_read_faults(csi_pmic_t *pmic, uint8_t pmic_id);
 
 csi_error_t csi_pmic_read_temperature(csi_pmic_t *pmic, uint32_t *val);
 
+/**
+  \brief       select pmic output mode
+  \param[in]   pmic      pmic handle
+  \param[in]   regu_ext_id
+  \param[in]   mode			pmic lowpower mode
+  \return      err code.
+*/
+csi_error_t csi_pmic_mode_select(csi_pmic_t *pmic, uint8_t regu_ext_id, pmic_buck_mode mode);
 /**
   \brief       set log level
   \param[in]   pmic      pmic handle

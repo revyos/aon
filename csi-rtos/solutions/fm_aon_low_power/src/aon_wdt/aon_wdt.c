@@ -27,57 +27,21 @@
 #include "aon_common.h"
 
 aon_wdt_t g_aon_wdt;
+uint32_t last_wdt_stat = 0;
 
-int aon_hw_wdt_start(aon_wdt_t *aon_wdt)
+static int aon_hw_wdt_set_time_len(aon_wdt_t *aon_wdt, uint32_t time_len)
 {
         int ret = 0;
         /*start pmic-wdt*/
 
-        if (g_aon_wdt.hw_wdt_en == 1)
-                return 0;
-
         if (g_aon_wdt.hw_wdt.type == AON_HW_WDT_USE_PMIC) {
-                ret = csi_pmic_wdt_start(g_aon_wdt.hw_wdt.wdt_pmic.pmic_handle);
+                ret = csi_pmic_wdt_set_timer(
+                    g_aon_wdt.hw_wdt.wdt_pmic.pmic_handle, time_len);
                 if (ret) {
-                        LOG_E("start pmic-wdt timer err %d \n", ret);
+                        LOG_E("set pmic-wdt timer len err %d \n", ret);
                 }
         } else {
-               ret = 0;
-        }
-
-        g_aon_wdt.hw_wdt_en = 1;
-
-        return ret;
-}
-
-int aon_hw_wdt_stop(aon_wdt_t *aon_wdt)
-{
-        int ret = 0;
-
-        if (g_aon_wdt.hw_wdt_en == 0)
-                return 0;
-
-        if (g_aon_wdt.hw_wdt.type == AON_HW_WDT_USE_PMIC) {
-                /*stop backup wdt-timer */
-                ret = csi_pmic_wdt_stop(g_aon_wdt.hw_wdt.wdt_pmic.pmic_handle);
-                if (ret) {
-                        LOG_E("stop pmic-wdt err\n");
-                }
-        } else {
-                return -1;
-        }
-
-        g_aon_wdt.hw_wdt_en = 0;
-        return ret;
-}
-
-static int aon_hw_wdt_feed(aon_wdt_t *aon_wdt)
-{
-        int ret = 0;
-
-        ret = csi_pmic_wdt_feed(g_aon_wdt.hw_wdt.wdt_pmic.pmic_handle);
-        if (ret) {
-				LOG_E("feed pmic-wdt timer err %d \n", ret);
+              ret = 0;
         }
 
         return ret;
@@ -130,19 +94,13 @@ int aon_hw_wdt_repower(aon_wdt_t *aon_wdt)
         return ret;
 }
 
-static int aon_hw_wdt_set_time_len(aon_wdt_t *aon_wdt, uint32_t time_len)
+static int aon_hw_wdt_feed(aon_wdt_t *aon_wdt)
 {
         int ret = 0;
-        /*start pmic-wdt*/
 
-        if (g_aon_wdt.hw_wdt.type == AON_HW_WDT_USE_PMIC) {
-                ret = csi_pmic_wdt_set_timer(
-                    g_aon_wdt.hw_wdt.wdt_pmic.pmic_handle, time_len);
-                if (ret) {
-                        LOG_E("set pmic-wdt timer len err %d \n", ret);
-                }
-        } else {
-              ret = 0;
+        ret = csi_pmic_wdt_feed(g_aon_wdt.hw_wdt.wdt_pmic.pmic_handle);
+        if (ret) {
+				LOG_E("feed pmic-wdt timer err %d \n", ret);
         }
 
         return ret;
@@ -157,6 +115,7 @@ static void aon_wdt_monitor_tmr_callback(csi_timer_t *timer_handle, void *arg)
         switch (g_aon_wdt.monitor_state) {
                 case AON_WDT_MONITOR_RUN: {
                         index = chip_wdt_check_timeout(aon_wdt, &wdt_tmr_out);
+
                         if (index > 0) {
                                 g_aon_wdt.monitor_state =
                                     AON_WDT_MONITOR_REPOWER;
@@ -202,6 +161,103 @@ static int aon_wdt_init_monitor_timer(aon_wdt_t *aon_wdt, uint32_t tmr_sec)
         return ret;
 }
 
+int aon_hw_wdt_start(aon_wdt_t *aon_wdt)
+{
+        int ret = 0;
+        /*start pmic-wdt*/
+
+        if (g_aon_wdt.hw_wdt_en == 1)
+                return 0;
+
+        if (g_aon_wdt.hw_wdt.type == AON_HW_WDT_USE_PMIC) {
+                ret = csi_pmic_wdt_start(g_aon_wdt.hw_wdt.wdt_pmic.pmic_handle);
+                if (ret) {
+                        LOG_E("start pmic-wdt timer err %d \n", ret);
+                }
+        } else {
+               ret = 0;
+        }
+
+        g_aon_wdt.hw_wdt_en = 1;
+
+        return ret;
+}
+
+int aon_hw_wdt_stop(aon_wdt_t *aon_wdt)
+{
+        int ret = 0;
+
+	if(!g_aon_wdt.hw_wdt_en)
+		return ret;
+
+        if (g_aon_wdt.hw_wdt.type == AON_HW_WDT_USE_PMIC) {
+                /*stop backup wdt-timer */
+                ret = csi_pmic_wdt_stop(g_aon_wdt.hw_wdt.wdt_pmic.pmic_handle);
+                if (ret) {
+                        LOG_E("stop pmic-wdt err\n");
+                }
+        }
+
+        g_aon_wdt.hw_wdt_en = 0;
+        return ret;
+}
+
+int aon_wdt_start()
+{
+
+        int ret;
+
+        if (g_aon_wdt.monitor_state != AON_WDT_MONITOR_IDLE)
+                return 0;
+
+        /*start monitor-timer for wdt-time-out within ap-subsys and aud-subsys*/
+        ret = csi_timer_start((csi_timer_t *)&g_aon_wdt.timer_handle,
+				g_aon_wdt.monitor_tmr_len * 1000000);
+        if (ret) {
+                LOG_E("start monitor timer err %d \n", ret);
+                return ret;
+        }
+
+        /*start backup wdt-timer to prevent system-lockup */
+        ret = aon_hw_wdt_set_time_len(&g_aon_wdt, AON_WDT_PMIC_TMR_LEN);
+        if (ret) {
+                csi_timer_stop((csi_timer_t *)&g_aon_wdt.timer_handle);
+                return ret;
+        }
+
+        /*start pmic-wdt*/
+        g_aon_wdt.monitor_state = AON_WDT_MONITOR_RUN;
+
+        last_wdt_stat  = chip_wdt_get_sta();
+        printf("Last wdt sta 0x%x\n", last_wdt_stat);
+
+        /*clear wdt-reset state*/
+        chip_wdt_clear_reset();
+        /*clear wdt-interrupt flag*/
+        chip_wdt_clear_timeout();
+        /*disable generating reset event of wdt within ap-subsys and aud-subsys*/
+        chip_wdt_disable_reset();
+
+        return 0;
+}
+
+int aon_wdt_stop()
+{
+
+	/* Return if watchdog is already detected timeout */
+        if (g_aon_wdt.monitor_state == AON_WDT_MONITOR_REPOWER)
+                return 0;
+
+	/* Stop hw watchdog before disable sw watchdog */
+	aon_hw_wdt_stop(&g_aon_wdt);
+        /* stop watchdog timer*/
+        csi_timer_stop((csi_timer_t *)&g_aon_wdt.timer_handle);
+
+	g_aon_wdt.monitor_state = AON_WDT_MONITOR_IDLE;
+
+	return 0;
+}
+
 static void wdg_dispatch(aon_rpc_msg_t *msg, aon_rpc_msg_t *tx_msg)
 {
         uint8_t    func     = RPC_GET_FUNC(msg);
@@ -218,9 +274,14 @@ static void wdg_dispatch(aon_rpc_msg_t *msg, aon_rpc_msg_t *tx_msg)
                         RPC_SET_BE32(tx_msg->data, 5, U32(state));
                 } break;
                 case WDG_FUNC_WDG_START: {
-                        LOG_D("wdg start\n");
-#warning "difference with WDG_FUNC_AON_WDT_ON"
-                        ret = aon_hw_wdt_start(&g_aon_wdt);
+                        ret = aon_wdt_start();
+                        if (ret < 0) {
+                                result = AON_ERR_FAIL;
+                        }
+                        ack_size = 1U;
+                } break;
+                case WDG_FUNC_WDG_STOP: {
+                        ret = aon_wdt_stop();
                         if (ret < 0) {
                                 result = AON_ERR_FAIL;
                         }
@@ -263,7 +324,6 @@ static void wdg_dispatch(aon_rpc_msg_t *msg, aon_rpc_msg_t *tx_msg)
                         aon_pmic_poweroff();
                 } break;
                 case WDG_FUNC_AON_WDT_ON: {
-#warning "difference with WDG_FUNC_WDG_START"
                         ret = aon_hw_wdt_start(&g_aon_wdt);
                         if (ret != 0) {
                                 result = AON_ERR_FAIL;
@@ -338,43 +398,4 @@ int aon_wdt_init(aon_hw_wdt_en type)
         return aon_rpc_svc_cb_register(AON_RPC_SVC_WDG, wdg_dispatch);
 }
 
-uint32_t last_wdt_stat = 0;
 
-int aon_wdt_start()
-{
-
-        int ret;
-
-        if (g_aon_wdt.monitor_state != AON_WDT_MONITOR_IDLE)
-                return 0;
-
-        /*start monitor-timer for wdt-time-out within ap-subsys and aud-subsys*/
-        ret = csi_timer_start((csi_timer_t *)&g_aon_wdt.timer_handle,
-                              g_aon_wdt.monitor_tmr_len * 1000000);
-        if (ret) {
-                LOG_E("start monitor timer err %d \n", ret);
-                return ret;
-        }
-
-        /*start backup wdt-timer to prevent system-lockup */
-        ret = aon_hw_wdt_set_time_len(&g_aon_wdt, AON_WDT_PMIC_TMR_LEN);
-        if (ret) {
-                csi_timer_stop((csi_timer_t *)&g_aon_wdt.timer_handle);
-                return ret;
-        }
-
-        /*start pmic-wdt*/
-        g_aon_wdt.monitor_state = AON_WDT_MONITOR_RUN;
-
-        last_wdt_stat  = chip_wdt_get_sta();
-        printf("Last wdt sta 0x%x", last_wdt_stat);
-
-        /*clear wdt-reset state*/
-        chip_wdt_clear_reset();
-        /*clear wdt-interrupt flag*/
-        chip_wdt_clear_timeout();
-        /*disable generating reset event of wdt within ap-subsys and aud-subsys*/
-        chip_wdt_disable_reset();
-
-        return 0;
-}

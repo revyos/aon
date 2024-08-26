@@ -49,6 +49,7 @@ csi_error_t da9063_get_powerup_flag(csi_pmic_t *pmic, csi_pmic_dev_t *pmic_dev, 
     	.ereg = DA_9063_REG_REG_## _id##_CONT,					\
     	.vreg =	DA_9063_REG_REG_V## _id##_A,						\
     	.vmask = DA_9063_REG_VBUCK_MASK,							\
+	.vconf = DA_9063_REG_REG_## _id##_CFG,					\
     	.linear_min_sel = DA_9063_REG_VBUCK_BIAS,            \
 }
 
@@ -206,7 +207,7 @@ static csi_error_t da9063_set_voltage(csi_pmic_t *pmic,csi_pmic_dev_t *pmic_dev,
 
     csi_error_t ret;
     csi_regu_t *regu = NULL;
-    uint32_t val;
+    uint32_t val, temp;
     uint16_t dev_addr =  pmic_dev->dev_info->addr1;
 
     ret = pmic_get_regu_info(pmic_dev, regu_id, &regu);
@@ -217,7 +218,11 @@ static csi_error_t da9063_set_voltage(csi_pmic_t *pmic,csi_pmic_dev_t *pmic_dev,
     if(!regu->vreg | !regu->vmask)
     		return CSI_UNSUPPORTED;
 
-    val = (target_uv - regu->min_uv)/regu->step_uv + regu->linear_min_sel;
+    ret = pmic->pmic_read_reg(pmic, dev_addr, regu->vreg, &temp);
+    if(ret)
+    		return ret;
+
+    val = (temp & ~regu->vmask) | (regu->vmask & (target_uv - regu->min_uv)/regu->step_uv + regu->linear_min_sel);
     ret = pmic->pmic_write_reg(pmic, dev_addr, regu->vreg, val);
     if(ret)
     		return ret;
@@ -387,6 +392,73 @@ csi_error_t da9063_wdt_repower(csi_pmic_t *pmic, csi_pmic_dev_t *pmic_dev)
     	while(1);
 }
 
+csi_error_t da9063_select_buck_mode(csi_pmic_t *pmic, csi_pmic_dev_t *pmic_dev, uint32_t regu_id, pmic_buck_mode mode)
+{
+    CSI_PARAM_CHK(pmic, CSI_ERROR);
+    CSI_PARAM_CHK(pmic_dev, CSI_ERROR);
+    csi_error_t ret;
+    csi_regu_t *regu = NULL;
+    uint32_t val;
+    uint32_t temp;
+    uint16_t dev_addr = pmic_dev->dev_info->addr1;
+
+    ret = pmic_get_regu_info(pmic_dev, regu_id, &regu);
+    if(ret) {
+    	return ret;
+    }
+    if(!regu->vreg | !regu->vmask | !regu->vconf)
+    		return CSI_UNSUPPORTED;
+
+   ret = pmic->pmic_read_reg(pmic, dev_addr, regu->vconf, &temp);
+    if(ret)
+    		return ret;
+
+    switch(mode) {
+	case SYNC:
+		val = DA_9063_REG_BUCK_MODE_SYNC | (~DA_9063_REG_BUCK_MODE_MASK & temp);
+		/*
+		ret = pmic->pmic_read_reg(pmic, dev_addr, regu->vreg, &temp);
+		if(ret)
+	    	return ret;
+		val = (~(1 << 7)) & temp;
+		ret = pmic->pmic_write_reg(pmic, dev_addr, regu->vreg, val);
+		if(ret)
+			return ret;
+			*/
+	break;
+	case SLEEP:
+		val = DA_9063_REG_BUCK_MODE_SLEEP | (~DA_9063_REG_BUCK_MODE_MASK & temp);
+		/*
+		ret = pmic->pmic_read_reg(pmic, dev_addr, regu->vreg, &temp);
+		if(ret)
+			return ret;
+		val = (1 << 7) | temp;
+		ret = pmic->pmic_write_reg(pmic, dev_addr, regu->vreg, val);
+		if(ret)
+			return ret;
+			*/
+	break;
+	case AUTO:
+		val = DA_9063_REG_BUCK_MODE_AUTO | (~DA_9063_REG_BUCK_MODE_MASK & temp);
+	break;
+	default:
+	{
+		LOG_E("buck output mode is not supported\n");
+		return CSI_UNSUPPORTED;
+	}
+	break;
+    }
+    ret = pmic->pmic_write_reg(pmic, dev_addr, regu->vconf, val);
+    if(ret)
+	return ret;
+    LOG_D("[%s,%d]set_voltage:regu_id %d into %d mode"
+		    "Register: 0x%x, Value: 0x%x\n",
+		    __func__, __LINE__,
+		    regu_id, mode,
+		    regu->vconf, val);
+    return ret;
+}
+
 csi_error_t da9063_regu_read_faults(csi_pmic_t *pmic, csi_pmic_dev_t *pmic_dev)
 {
     CSI_PARAM_CHK(pmic, CSI_ERROR);
@@ -406,7 +478,7 @@ csi_error_t da9063_regu_read_faults(csi_pmic_t *pmic, csi_pmic_dev_t *pmic_dev)
     if (ret)
     	return ret;
     if(event_data[0]) {
-    	LOG_D("%s, %d da9063 error is detected!, the event data is: %08x\n", event_data[0]);
+    	LOG_E("%s, %d da9063 error is detected!, the event data is: %08x\n", event_data[0]);
     switch(event_data[0]) {
     	case DA_9063_REG_E_TEMP:
     		{
@@ -637,6 +709,7 @@ static csi_regu_ops_t da9063_ops = {
     .get_powerup     = da9063_get_powerup_flag,
     .regu_power_ctrl = da9063_regu_power_ctrl,
     .read_faults	 = da9063_regu_read_faults,
+    .mode_select     = da9063_select_buck_mode,
     .get_temperature = da9063_regu_get_temperature,
     .gpio_output     = da9063_gpio_ctrl,
     .init            = da9063_init,

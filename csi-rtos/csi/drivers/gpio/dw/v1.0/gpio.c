@@ -20,16 +20,25 @@
 
 extern csi_error_t csi_pin_mode(pin_name_t pin_name, csi_gpio_mode_t mode);
 
-static void dw_gpio_irqhandler(void *args)
+void csi_gpio_intr_clr(csi_gpio_t *gpio)
 {
     uint32_t bitmask;
-    csi_gpio_t *handle = (csi_gpio_t *)args;
-    dw_gpio_regs_t *reg = (dw_gpio_regs_t *)HANDLE_REG_BASE(handle);
+    dw_gpio_regs_t *reg = (dw_gpio_regs_t *)HANDLE_REG_BASE(gpio);
 
     bitmask = dw_gpio_read_port_int_status(reg);
 
     /* clear all interrput */
     dw_gpio_clr_port_irq(reg, bitmask);
+}
+
+static void dw_gpio_irqhandler(void *args)
+{
+    uint32_t bitmask;
+    csi_gpio_t *handle = (csi_gpio_t *)args;
+
+    dw_gpio_regs_t *reg = (dw_gpio_regs_t *)HANDLE_REG_BASE(handle);
+    bitmask = dw_gpio_read_port_int_status(reg);
+    csi_gpio_intr_clr(handle);
 
     /* execute the callback function */
     if (handle->callback) {

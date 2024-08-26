@@ -13,6 +13,7 @@
 #include <stdint.h>
 #include <drv/uart.h>
 #include <drv/mbox.h>
+#include <drv/rtc.h>
 
 #include "syslog.h"
 #include "board_config.h"
@@ -20,7 +21,7 @@
 
 sys_console_t console;
 csi_mbox_t mbox;
-
+csi_rtc_t rtc;
 
 void board_init(void)
 {
@@ -39,6 +40,10 @@ void board_init(void)
 	ret = csi_mbox_init(&mbox, EXAMPLE_MBOX_IDX);
 	if (ret != CSI_OK) {
 		LOG_E("mbox init failed\n");
+	}
+	ret = csi_rtc_init(&rtc, 0);
+	if (ret != CSI_OK) {
+		LOG_E("rtc init failed\n");
 	}
 }
 
